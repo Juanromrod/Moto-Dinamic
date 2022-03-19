@@ -12,12 +12,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='product',
+            name='productos',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30)),
-                ('price', models.IntegerField()),
-                ('stock', models.IntegerField()),
+                ('nombre', models.CharField(max_length=30)),
+                ('precio', models.IntegerField()),
             ],
         ),
     ]
