@@ -6,7 +6,8 @@ class TipoProducto(models.Model):
     nombre = models.CharField(max_length=20)
     desc = models.CharField(max_length=128)
 
-class Productos(models.Model):
+#Modelos singular
+class Productos(models.Model): 
     nombre = models.CharField(max_length=30)
     precio = models.IntegerField()
     stock = models.IntegerField
