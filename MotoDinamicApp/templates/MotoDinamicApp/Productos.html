@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,7 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="Navbar.css">
+    <link rel="stylesheet" href='{% static "CSS/Navbar.css" %}'>
     <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
   </head>
   <body>
@@ -37,7 +38,7 @@
             </ul>
             <div>
                 <a href="/">
-                    <img class="logo" src="logo-01.png" />
+                    <img class="logo" src='{% static "images/logo-01.png" %}' />
                 </a>
             </div>
             <li class="signout">
@@ -82,7 +83,7 @@
             <div class="lista">
               <div class="productCard">
                 <div class="imageCard">
-                  <img src="casco.jpg" alt="producto" />
+                  <img src='{% static "images/casco.jpg" %}' alt="producto" />
                 </div>
                 <div class="infoCard">
                   <h2> Casco <span>#ID2031</span></h2>
@@ -91,7 +92,7 @@
                   <p class="type"> Accesorio </p>
                 </div>
               </div>
-              <div class="productCard">
+              <!--<div class="productCard">
                 <div class="imageCard">
                   <img src="casco.jpg" alt="producto" />
                 </div>
@@ -123,27 +124,31 @@
                   <p class="info"> Precio: $50.000 </p>
                   <p class="type"> Accesorio </p>
                 </div>
-              </div>
+              </div>-->
             </div>
             <div class="buscar">
-              <span style="display: block;">Código</span>
-              <div class="searchinput">
-                <input type="text" id="search" value="ID2031">
-                <div class="lupa">
-                  <img id="search-icon" src="magnifying-glass-solid.svg" alt="lupa" />
+              <form action="{% url 'productos' %}" method="POST">
+                {% csrf_token %}
+                <span style="display: block;">Código</span>
+                <div class="searchinput">
+                  <input type="text" id="search" value="ID2031">
+                  <div class="lupa">
+                    <!--<img id="search-icon" src='{% static "images/magnifying-glass-solid.svg" %}' alt="lupa" />-->
+                    <button type="submit">Buscar</button>
+                  </div>
                 </div>
-              </div>
-              <div style="margin-top: 30px;" class="productCard">
-                <div class="imageCard">
-                  <img src="casco.jpg" alt="producto" />
+                <div style="margin-top: 30px;" class="productCard">
+                  <div class="imageCard">
+                   <img src='{% static "images/casco.jpg" %}' alt="producto" />
+                  </div>
+                  <div class="infoCard">
+                    <h2> {{producto.name}} <span>#{{producto.id}}</span></h2>
+                    <p class="info"> Unidades: 5 </p>
+                    <p class="info"> Precio: $50.000 </p>
+                    <p class="type"> Accesorio </p>
+                  </div>
                 </div>
-                <div class="infoCard">
-                  <h2> Casco <span>#ID2031</span></h2>
-                  <p class="info"> Unidades: 5 </p>
-                  <p class="info"> Precio: $50.000 </p>
-                  <p class="type"> Accesorio </p>
-                </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

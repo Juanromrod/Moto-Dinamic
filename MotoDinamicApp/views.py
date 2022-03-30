@@ -41,4 +41,11 @@ def getTipoProducto(request):
         myTipoProducto = TipoProducto.objects.get(id = myId)
         return HttpResponse(myTipoProducto.nombre)
 
+def products(request):
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Productos.html')
+    if request.method == 'POST':
+        myId = request.POST['productId']
+        miProducto = TipoProducto.objects.get(id = myId)
+        return render(request, 'MotoDinamicApp/Productos.html', {'product': miProducto})
 #def showTipoProduct(request)
