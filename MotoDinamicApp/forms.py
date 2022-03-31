@@ -6,6 +6,6 @@ from .models import *
 class inputTipoProducto(forms.ModelForm):
     class Meta:
         model = TipoProducto
-        fields = ['nombre','desc']
+        fields = ['nombre']
 
 

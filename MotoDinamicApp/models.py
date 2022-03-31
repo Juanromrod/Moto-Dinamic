@@ -1,32 +1,34 @@
 from django.db import models
+from django.db.models.deletion import CASCADE,PROTECT,SET_NULL,SET_DEFAULT
 
 # Create your models here.
 
 class TipoProducto(models.Model):
-    nombre = models.CharField(max_length=20)
-    desc = models.CharField(max_length=128)
+    nombre = models.CharField(max_length=30)
 
-#Modelos singular
-class Productos(models.Model): 
+class Producto(models.Model): 
     nombre = models.CharField(max_length=30)
     precio = models.IntegerField()
     stock = models.IntegerField
     desc = models.CharField(max_length=128)
+    idTipoProducto = models.ForeignKey(TipoProducto, on_delete=PROTECT)
 
 class TipoServicio(models.Model):
-    nombre = models.CharField(max_length=20)
-    desc = models.CharField(max_length=128)
+    nombre = models.CharField(max_length=30)
 
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     precio = models.IntegerField()
     desc = models.CharField(max_length=128)
+    idTipoServicio = models.ForeignKey(TipoServicio, on_delete=PROTECT)
+
 
 class Cliente(models.Model):
     identificacion = models.CharField(max_length=30)
     nombre = models.CharField(max_length=30)
     celular = models.CharField(max_length=15)
     correo = models.CharField(max_length=128)
+    direccion = models.CharField(max_length=128)
     
 
 class Moto(models.Model):
@@ -35,17 +37,30 @@ class Moto(models.Model):
     marca = models.CharField(max_length=30)
     modelo = models.CharField(max_length=30)    
 
-class OrdenesDeIngreso(models.Model):
-    #foreignkey tipo servico
-    #foreignkey tipo cliente
-    #foreignkey tipo moto
-    desc_problema = models.CharField(max_length=128)
-    fecha = models.DateTimeField()
+class OrdenDeIngreso(models.Model):
+    desc_problema = models.CharField(max_length=228)
+    fecha_ingreso = models.DateTimeField()
+    info_adicional = models.CharField(max_length=228)
+    idMoto = models.ForeignKey(Moto, on_delete=PROTECT)
 
 class Factura(models.Model):
-    #foreign key cliente
-    #foreign key productos
-    #foreign key servicios
     fecha = models.DateTimeField()
     iva = models.IntegerField()
     total = models.IntegerField()
+
+class Cliente_Factura(models.Model):
+    idCliente = models.ForeignKey(Cliente, on_delete=PROTECT)
+    idFactura = models.ForeignKey(Factura, on_delete=PROTECT)
+
+class Factura_Producto(models.Model):
+    idFactura = models.ForeignKey(Factura, on_delete=PROTECT)
+    idProducto = models.ForeignKey(Producto, on_delete=PROTECT)
+
+class Factura_Servicio(models.Model):
+    idFactura = models.ForeignKey(Factura, on_delete=PROTECT)
+    idServicio = models.ForeignKey(Servicio, on_delete=PROTECT)
+
+class OrdenDeIngreso_Servicio(models.Model):
+    idOrdenDeIngreso = models.ForeignKey(OrdenDeIngreso, on_delete=PROTECT)
+    idServicio = models.ForeignKey(Servicio, on_delete=PROTECT)
+
