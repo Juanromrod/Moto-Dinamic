@@ -131,10 +131,10 @@
                 {% csrf_token %}
                 <span style="display: block;">Código</span>
                 <div class="searchinput">
-                  <input type="text" id="search" value="ID2031">
+                  <input type="text" name='productId' id="search">
                   <div class="lupa">
                     <!--<img id="search-icon" src='{% static "images/magnifying-glass-solid.svg" %}' alt="lupa" />-->
-                    <button type="submit">Buscar</button>
+                    <button class="btn" type="submit">Buscar</button>
                   </div>
                 </div>
                 <div style="margin-top: 30px;" class="productCard">
@@ -142,10 +142,10 @@
                    <img src='{% static "images/casco.jpg" %}' alt="producto" />
                   </div>
                   <div class="infoCard">
-                    <h2> {{producto.name}} <span>#{{producto.id}}</span></h2>
-                    <p class="info"> Unidades: 5 </p>
-                    <p class="info"> Precio: $50.000 </p>
-                    <p class="type"> Accesorio </p>
+                    <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
+                    <p class="info"> Unidades: {{product.stock}} </p>
+                    <p class="info"> Precio: ${{product.precio}} </p>
+                    <p class="type"> {{product.idTipoProducto.nombre}} </p>
                   </div>
                 </div>
               </form>

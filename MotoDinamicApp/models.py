@@ -9,7 +9,7 @@ class TipoProducto(models.Model):
 class Producto(models.Model): 
     nombre = models.CharField(max_length=30)
     precio = models.IntegerField()
-    stock = models.IntegerField
+    stock = models.IntegerField()
     desc = models.CharField(max_length=128)
     idTipoProducto = models.ForeignKey(TipoProducto, on_delete=PROTECT)
 

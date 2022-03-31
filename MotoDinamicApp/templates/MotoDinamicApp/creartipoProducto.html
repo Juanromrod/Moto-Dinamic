@@ -7,7 +7,7 @@
     <title>Crear producto</title>
 </head>
 <body>
-    <form action="{% url 'insertar_producto' %}" method="POST">
+    <form action="{% url 'insertar' %}" method="POST">
         {% csrf_token %}
         {{form}}
         <button type="submit">Guardar</button>

@@ -213,3 +213,7 @@ h2 span {
 .searchinput {
   display: flex;
 }
+
+.btn {
+  color: #7db240;
+}

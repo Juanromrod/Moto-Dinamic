@@ -8,4 +8,9 @@ class inputTipoProducto(forms.ModelForm):
         model = TipoProducto
         fields = ['nombre']
 
+class inputProducto(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['nombre', 'precio', 'stock', 'desc', 'idTipoProducto']
+
 
