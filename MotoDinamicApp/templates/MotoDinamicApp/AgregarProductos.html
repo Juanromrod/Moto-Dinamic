@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href='{% static "CSS/Navbar.css" %}'>
+    <link rel="stylesheet" href='{% static "CSS/AgregarProductos.css" %}'>
     <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
   </head>
   <body>
@@ -48,6 +48,7 @@
                 </a>
             </li>
         </nav>
+
         <div class="contenedor">
           <div class="latnav">
             <h3>Productos & Servicios</h3>
@@ -79,49 +80,38 @@
             </div>
           </div>
           <div class="productos">
-            <h1>Productos <a style="margin-left: 15px;" href="/crearproducto"><i class="add fas fa-solid fa-plus"></i></a></h1>
-            <div class="lista">
-              {%for myProduct in products%}
-                <div class="productCard">
-                  <div class="imageCard">
-                   <img src='{% static "images/casco.jpg" %}' alt="producto" />
-                  </div>
-                  <div class="infoCard">
-                    <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
-                    <p class="info"> Unidades: {{myProduct.stock}} </p>
-                    <p class="info"> Precio: ${{myProduct.precio}} </p>
-                    <p class="type"> {{myProduct.idTipoProducto.nombre}} </p>
-                  </div>
-                </div>
-              {%endfor%}
-            </div>
-            <div class="buscar">
-              <form action="{% url 'productos' %}" method="POST">
-                {% csrf_token %}
-                <span style="display: block;">Código</span>
-                <div class="searchinput">
-                  <input type="text" name='productId' id="search">
-                  <div class="lupa">
-                    <button class="btn" type="submit">Buscar</button>
-                  </div>
-                </div>
-                {%if product%}
-                  <div style="margin-top: 30px;" class="productCard">
-                    <div class="imageCard">
-                    <img src='{% static "images/casco.jpg" %}' alt="producto" />
-                    </div>
-                    <div class="infoCard">
-                     <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
-                     <p class="info"> Unidades: {{product.stock}} </p>
-                     <p class="info"> Precio: ${{product.precio}} </p>
-                     <p class="type"> {{product.idTipoProducto.nombre}} </p>
-                    </div>
-                  </div>
-                {%endif%}
-              </form>
-            </div>
+            <div class="lista-inputs">
+            <h1>Productos </h1>
+            <form action="{% url 'insertar_producto' %}" method="POST">
+              {% csrf_token %}
+              {{form}}
+              <div class="boton">
+                <button name="guardar" type="submit" class="button"> GUARDAR </button>
+              </div>
+            </form>
           </div>
         </div>
+    <br>
+    </div>
+    <div class="footer">
+      <div class="footer-content">
+        <div class="footer-section foto">
+          <img src='{% static "images/logo-02.png" %}' class="logo-footer"/>
+        </div>
+        <div class="footer-section contactar">
+          <div class="texto">
+            <br><br><br><br>
+            50 #17-50 Sur, Bogotá D.C
+            <br>
+             +57 3205398442
+             <br>
+             motodinamic@mail.com
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; MOTODINAMIC
     </div>
   </body>
 </html>

@@ -12,22 +12,12 @@ from .forms import inputProducto, inputTipoProducto
 def index(request):
     return HttpResponse("Hola, Bienvenidos a Moto Dinamic.")
 
-def insertTypeProduct(request):
-    typeProduct = TipoProducto.objects.create(
-        name = 'accesory',
-        desc = 'This is an accesory for your moto'
-    )
-
-    typeProduct.save()
-    return HttpResponse('test')
-
 # Create your views here.
 def insertarTipoProducto(request):
     if request.method == 'GET':
         form = inputTipoProducto()
         return render(request, 'MotoDinamicApp/creartipoProducto.html',{'form': form})
     elif request.method == 'POST':
-        #print(myTipoProducto)
         myTipoProducto = inputTipoProducto(request.POST)
         if myTipoProducto.is_valid():
             myTipoProducto.save()
@@ -43,22 +33,21 @@ def getTipoProducto(request):
         return HttpResponse(myTipoProducto.nombre)
 
 def Product(request):
+    products = Producto.objects.all()
     if request.method == "GET":
-        return render(request, 'MotoDinamicApp/Productos.html')
+        return render(request, 'MotoDinamicApp/Productos.html', {'products': products})
     if request.method == 'POST':
         myId = request.POST['productId']
         miProducto = Producto.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Productos.html', {'product': miProducto})
+        return render(request, 'MotoDinamicApp/Productos.html', {'product': miProducto , 'products': products})
 
 def insertarProducto(request):
     if request.method == 'GET':
         form = inputProducto()
-        return render(request, 'MotoDinamicApp/crearProducto.html',{'form': form})
+        return render(request, 'MotoDinamicApp/AgregarProductos.html',{'form': form})
     elif request.method == 'POST':
         myProducto = inputProducto(request.POST)
         if myProducto.is_valid():
             myProducto.save()
-            producto = Producto.objects.get(id=1)
-            print(producto.nombre)
         return redirect('insertar_producto')
     return HttpResponse("funcion insertar")
