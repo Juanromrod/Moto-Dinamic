@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href='{% static "CSS/Navbar.css" %}'>
+    <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Navbar.css" %}'>
     <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
   </head>
   <body>
@@ -38,7 +38,7 @@
             </ul>
             <div>
                 <a href="/">
-                    <img class="logo" src='{% static "images/logo-01.png" %}' />
+                    <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
                 </a>
             </div>
             <li class="signout">
@@ -84,7 +84,7 @@
               {%for myProduct in products%}
                 <div class="productCard">
                   <div class="imageCard">
-                   <img src='{% static "images/casco.jpg" %}' alt="producto" />
+                   <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
                   </div>
                   <div class="infoCard">
                     <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
@@ -108,7 +108,7 @@
                 {%if product%}
                   <div style="margin-top: 30px;" class="productCard">
                     <div class="imageCard">
-                    <img src='{% static "images/casco.jpg" %}' alt="producto" />
+                    <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
                     </div>
                     <div class="infoCard">
                      <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>

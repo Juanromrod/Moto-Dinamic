@@ -51,3 +51,9 @@ def insertarProducto(request):
             myProducto.save()
         return redirect('insertar_producto')
     return HttpResponse("funcion insertar")
+
+def hijo(request):
+    return render(request, 'MotoDinamicApp/hijo.html')
+
+def padre(request):
+    return render(request, 'MotoDinamicApp/crearProducto.html')

@@ -10,6 +10,9 @@
     <form action="{% url 'insertar_producto' %}" method="POST">
         {% csrf_token %}
         {{form}}
+        <p>Esta es mi cabecera</p>
+        {%block contenido%}
+        {%endblock%}
         <button type="submit">Guardar</button>
     </form>
 </body>

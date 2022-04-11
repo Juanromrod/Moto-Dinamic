@@ -193,6 +193,7 @@ h2 span {
   text-align: left;
   height: 700px;
   padding: 0px;
+  padding-top: 20px;
   width: 85%;
   margin-top: 50px;
   background-color: #fff;
@@ -213,24 +214,22 @@ form {
   padding: 14px 60px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
 }
 
 .boton{
-  position: relative;
   bottom: 120px;
   left: 550px;
 }
 
-.inputs{
+label{
   margin-left: 50px;
-  height: 50px;
+  height: 25px;
 }
 
-input[type=text], select, textarea {
+input, select, textarea{
   width: 300px;
   height: 50px;
   padding: 12px 20px;

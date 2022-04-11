@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href='{% static "CSS/AgregarProductos.css" %}'>
+    <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/AgregarProductos.css" %}'>
     <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
   </head>
   <body>
@@ -38,7 +38,7 @@
             </ul>
             <div>
                 <a href="/">
-                    <img class="logo" src='{% static "images/logo-01.png" %}' />
+                    <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
                 </a>
             </div>
             <li class="signout">
@@ -80,23 +80,23 @@
             </div>
           </div>
           <div class="productos">
-            <div class="lista-inputs">
             <h1>Productos </h1>
+            <div class="lista-inputs">
             <form action="{% url 'insertar_producto' %}" method="POST">
               {% csrf_token %}
               {{form}}
-              <div class="boton">
-                <button name="guardar" type="submit" class="button"> GUARDAR </button>
-              </div>
+            </div>
+            <div class="boton">
+              <button name="guardar" type="submit" class="button"> GUARDAR </button>
+            </div>
             </form>
-          </div>
         </div>
     <br>
     </div>
     <div class="footer">
       <div class="footer-content">
         <div class="footer-section foto">
-          <img src='{% static "images/logo-02.png" %}' class="logo-footer"/>
+          <img src='{% static "MotoDinamicApp/images/logo-02.png" %}' class="logo-footer"/>
         </div>
         <div class="footer-section contactar">
           <div class="texto">

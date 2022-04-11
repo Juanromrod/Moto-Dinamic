@@ -8,4 +8,6 @@ urlpatterns = [
     path('vertipoproducto/', views.getTipoProducto, name='get_producto'),
     path('crearproducto/', views.insertarProducto, name='insertar_producto'),
     path('productos/', views.Product, name='productos'),
+    path('hijo/', views.hijo, name='hijo'),
+    path('padre/', views.padre, name='padre'),
 ]
