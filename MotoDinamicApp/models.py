@@ -5,6 +5,8 @@ from django.db.models.deletion import CASCADE,PROTECT,SET_NULL,SET_DEFAULT
 
 class TipoProducto(models.Model):
     nombre = models.CharField(max_length=30)
+    def __str__(self):
+        return self.nombre
 
 class Producto(models.Model): 
     nombre = models.CharField(max_length=30)
@@ -15,6 +17,8 @@ class Producto(models.Model):
 
 class TipoServicio(models.Model):
     nombre = models.CharField(max_length=30)
+    def __str__(self):
+        return self.nombre
 
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)

@@ -9,19 +9,18 @@
 
 {% block contenido%}
 <div class="productos">
-  <h1>Productos <a style="margin-left: 15px;" href="/crearproducto"><i class="add fas fa-solid fa-plus"></i></a></h1>
+  <h1>Servicios <a style="margin-left: 15px;" href="/crearservicio"><i class="add fas fa-solid fa-plus"></i></a></h1>
   <div class="lista">
-    {%for myProduct in products%}
+    {%for miServicio in servicios%}
     <div>
     <div class="productCard">
       <div class="imageCard">
         <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
       </div>
       <div class="infoCard">
-        <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
-        <p class="info"> Unidades: {{myProduct.stock}} </p>
-        <p class="info"> Precio: ${{myProduct.precio | intcomma}} </p>
-        <p class="type"> {{myProduct.idTipoProducto.nombre}} </p>
+        <h2> {{miServicio.nombre}} <span>#{{miServicio.id}}</span></h2>
+        <p class="info"> Precio: ${{miServicio.precio | intcomma}} </p>
+        <p class="type"> {{miServicio.idTipoServicio.nombre}} </p>
       </div>
     </div>
     {% block editelim %}
@@ -30,27 +29,26 @@
     {%endfor%}
   </div>
   <div class="buscar">
-    <form action="{% url 'productos' %}" method="POST">
+    <form action="{% url 'servicios' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Código</span>
       <div class="searchinput">
-        <input type="text" name='productId' id="search">
+        <input type="text" name='servicioId' id="search">
         {% block busqueda %}
         {% endblock %}
         <div class="lupa">
           <button class="btn" type="submit">Buscar</button>
         </div>
       </div>
-      {%if product%}
+      {%if servicio%}
         <div style="margin-top: 30px;" class="productCard">
           <div class="imageCard">
           <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
           </div>
           <div class="infoCard">
-           <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
-           <p class="info"> Unidades: {{product.stock}} </p>
-           <p class="info"> Precio: ${{product.precio | intcomma}} </p>
-           <p class="type"> {{product.idTipoProducto.nombre}} </p>
+           <h2> {{servicio.nombre}} <span>#{{servicio.id}}</span></h2>
+           <p class="info"> Precio: ${{servicio.precio | intcomma}} </p>
+           <p class="type"> {{servicio.idTipoServicio.nombre}} </p>
           </div>
         </div>
         {% block editelim2 %}

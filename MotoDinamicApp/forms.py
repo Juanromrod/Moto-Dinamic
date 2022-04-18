@@ -13,4 +13,14 @@ class inputProducto(forms.ModelForm):
         model = Producto
         fields = ['nombre', 'precio', 'stock', 'desc', 'idTipoProducto']
 
+class inputTipoServicio(forms.ModelForm):
+    class Meta:
+        model = TipoServicio
+        fields = ['nombre']
+
+class inputServicio(forms.ModelForm):
+    class Meta:
+        model = Servicio
+        fields = '__all__'
+
 

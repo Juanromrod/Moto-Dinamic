@@ -1,28 +1,4 @@
-{% extends 'MotoDinamicApp/base.html'%}
-
 {%load static%}
-
-{% block style%}
-<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/AgregarProductos.css" %}'>
-{%endblock%}
-
-
-{% block contenido%}
-<div class="productos">
-  <h1>Productos </h1>
-  <div class="lista-inputs">
-  <form action="" method="POST">
-    {% csrf_token %}
-    {{form}}
-  </div>
-  <div class="boton">
-    <button name="guardar" type="submit" class="button"> GUARDAR </button>
-  </div>
-  </form>
-</div>
-{%endblock%}
-
-<!--
 <!DOCTYPE html>
 <html>
   <head>
@@ -32,11 +8,12 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/AgregarProductos.css" %}'>
+    <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Navbar.css" %}'>
+    {%block style%}
+    {%endblock%}
     <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
   </head>
   <body>
-    <div>
         <nav class="NavbarItems">
             <ul class="nav-menu">
               <li>
@@ -72,7 +49,6 @@
                 </a>
             </li>
         </nav>
-
         <div class="contenedor">
           <div class="latnav">
             <h3>Productos & Servicios</h3>
@@ -83,19 +59,19 @@
                     Agregar productos
                 </li>
               </a>
-              <a class="nav-links-lat" href="/EdiOElimP">             
+              <a class="nav-links-lat" href="/editarproducto">             
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-pen"></i>
                   Eliminar o modificar productos
                 </li>
               </a>
-              <a class="nav-links-lat" href="/Servicios">           
+              <a class="nav-links-lat" href="/servicios">           
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-plus"></i>
                   Agregar servicios
                 </li>
               </a>
-              <a class="nav-links-lat" href="/EdiOElimS">          
+              <a class="nav-links-lat" href="/editarservicio">          
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-pen"></i>
                   Eliminar o modificar servicios
@@ -103,20 +79,27 @@
               </a>
             </div>
           </div>
-          <div class="productos">
-            <h1>Productos </h1>
-            <div class="lista-inputs">
-            <form action="{% url 'insertar_producto' %}" method="POST">
-              {% csrf_token %}
-              {{form}}
-            </div>
-            <div class="boton">
-              <button name="guardar" type="submit" class="button"> GUARDAR </button>
-            </div>
-            </form>
+          {%block contenido%}
+          {%endblock%}
         </div>
-        <br>
+        <div class="footer">
+          <div class="footer-content">
+            <div class="footer-section foto">
+              <img src='{% static "MotoDinamicApp/images/logo-02.png" %}' class="logo-footer"/>
+            </div>
+            <div class="footer-bottom">
+              &copy; MOTODINAMIC 2022
+            </div>
+            <div class="footer-section contactar">
+              <div class="texto">
+                50 #17-50 Sur, Bogotá D.C
+                </br>
+                +57 3205398442
+                </br>
+                motodinamic@mail.com
+              </div>
+            </div>
+          </div>
         </div>
   </body>
 </html>
--->
