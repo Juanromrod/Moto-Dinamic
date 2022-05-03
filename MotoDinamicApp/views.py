@@ -10,7 +10,8 @@ from .forms import inputProducto, inputServicio, inputTipoProducto, inputTipoSer
 
 
 def index(request):
-    return HttpResponse("Hola, Bienvenidos a Moto Dinamic.")
+    if request.method == 'GET':
+        return render(request, 'MotoDinamicApp/login.html')
 
 # Create your views here.
 def insertarTipoProducto(request):

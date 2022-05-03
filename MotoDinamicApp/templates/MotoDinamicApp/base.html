@@ -38,12 +38,24 @@
               </li>
             </ul>
             <div>
-                <a href="/">
+                <a href="/productos">
                     <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
                 </a>
             </div>
+            <ul class="nav-menu">
+              <li>
+                <a href="/facturacion" class="nav-links">
+                  Facturación
+                </a>
+              </li>
+              <li>
+                <a href="/usuario" class="nav-links">
+                  Usuarios
+                </a>
+              </li>
+            </ul>
             <li class="signout">
-                <a id="signout" href="/SingIn" class="nav-links">
+                <a id="signout" href="/" class="nav-links">
                   <li class="icono fas fa-sign-out-alt"></li>
                   SIGN OUT
                 </a>
@@ -56,7 +68,7 @@
               <a class="nav-links-lat" href="/productos">
                 <li class="nav">
                     <i class="nav-icon fas fa-solid fa-plus"></i>
-                    Agregar productos
+                    Productos
                 </li>
               </a>
               <a class="nav-links-lat" href="/editarproducto">             
@@ -68,7 +80,7 @@
               <a class="nav-links-lat" href="/servicios">           
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-plus"></i>
-                  Agregar servicios
+                  Servicios
                 </li>
               </a>
               <a class="nav-links-lat" href="/editarservicio">          

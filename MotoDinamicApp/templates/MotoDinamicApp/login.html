@@ -1,0 +1,55 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Moto Dinamic</title>
+        <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap"
+        rel="stylesheet"
+        />
+        <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Login.css" %}'>
+        <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
+    </head>
+  <body>
+        <nav class="NavbarItemsLogin">
+            <div>
+                <a>
+                    <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
+                </a>
+            </div>
+        </nav>
+        <div class="LoginContenedor">
+          <h2>Bienvenido!</h2>
+          <p>Por favor inicia sesión para continuar</p>
+          <br>
+          <p class="inicarsesion">INICIAR SESIÓN</p>
+          <form action="" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <div class="boton">
+              <button name="guardar" type="submit" class="button"> INICIAR SESIÓN </button>
+            </div>
+          </form>
+        </div>
+        <div class="footer">
+          <div class="footer-content">
+            <div class="footer-section foto">
+              <img src='{% static "MotoDinamicApp/images/logo-02.png" %}' class="logo-footer"/>
+            </div>
+            <div class="footer-bottom">
+              &copy; MOTODINAMIC 2022
+            </div>
+            <div class="footer-section contactar">
+              <div class="texto">
+                50 #17-50 Sur, Bogotá D.C
+                </br>
+                +57 3205398442
+                </br>
+                motodinamic@mail.com
+              </div>
+            </div>
+          </div>
+        </div>
+  </body>
+</html>
