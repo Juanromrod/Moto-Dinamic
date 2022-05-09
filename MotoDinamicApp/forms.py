@@ -23,4 +23,12 @@ class inputServicio(forms.ModelForm):
         model = Servicio
         fields = '__all__'
 
+class inputCliente(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = '__all__'
 
+class inputMoto(forms.ModelForm):
+    class Meta:
+        model = Moto
+        fields = '__all__'
