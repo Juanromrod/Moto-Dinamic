@@ -1,0 +1,76 @@
+{% extends 'MotoDinamicApp/base.html'%}
+
+{%load humanize%}
+{%load static%}
+
+{% block style%}
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Productos.css" %}'>
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Eliminar.css" %}'>
+{%endblock%}
+
+{% block latnav%}
+<div class="navbarlat">
+  <a class="nav-links-lat" href="{% url 'registrar_usuario' %}">
+    <li class="nav">
+        <i class="nav-icon fas fa-solid fa-plus"></i>
+        Agregar usuario
+    </li>
+  </a>
+  <a class="nav-links-lat" href="{% url 'buscar_usuario' %}">             
+    <li class="nav">
+      <i class="nav-icon fas fa-solid fa-pen"></i>
+      Eliminar o modificar usuarios
+    </li>
+  </a>
+</div>
+{%endblock%}
+
+{% block contenido%}
+<div class="productos">
+  <h1>Usuarios </h1>
+  <div class="lista">
+    {%for myUser in usuarios%}
+    <div>
+      <div class="productCard">
+      <div class="imageCard">
+        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+      </div>
+      <div class="infoCard">
+        <h2> {{myUser.username}} <span>#{{myUser.id}}</span></h2>
+        <p class="info"> Nombre: {{myUser.first_name}}</p>
+        <p class="info"> Apellido: ${{myUser.last_name}} </p>
+        <p class="type"> {{myUser.email}} </p>
+      </div>
+      </div>
+      <!-- <p></p> -->
+    </div>
+    {%endfor%}
+  </div>
+  <div class="buscar">
+    <form action="{% url 'buscar_usuario' %}" method="POST">
+      {% csrf_token %}
+      <span style="display: block;">Usuario</span>
+      <div class="searchinput">
+        <input type="text" name='usuario' id="search">
+        <div class="lupa">
+          <button class="btn" type="submit">Buscar</button>
+        </div>
+      </div>
+      {%if usuario%}
+        <div style="margin-top: 30px;" class="productCard">
+          <div class="imageCard">
+          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+          </div>
+          <div class="infoCard">
+           <h2> {{usuario.username}}</h2>
+           <p class="info"> Nombre: {{usuario.first_name}} </p>
+           <p class="info"> Apellido: ${{usuario.last_name}} </p>
+           <p class="type"> {{usuario.email}} </p>
+          </div>
+        </div>
+        <p class="editelim"><a class="editar" href="{% url 'editar_usuario' usuario.username %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_usuario' usuario.username %}">Eliminar</a></p>
+      {%endif%}
+    </form>
+  </div>
+</div>
+{%endblock%}

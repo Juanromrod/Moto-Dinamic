@@ -23,11 +23,12 @@ body {
   grid-gap: 10px;
   list-style-type: none;
   justify-content: end;
+  padding-right: 40px;
 }
 
 .icono{
   color: #7db240;
-  margin-left: 10%;
+  margin-left: 5%;
 }
 
 .navbarlat {
@@ -182,3 +183,5 @@ h1 {
   height: 100%;
   margin-left: 30%;
 }
+
+

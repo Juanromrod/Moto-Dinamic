@@ -1,0 +1,44 @@
+{% extends 'MotoDinamicApp/base.html'%}
+
+{%load static%}
+
+{% block style%}
+
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/AgregarUsuario.css" %}'>
+{%endblock%}
+
+{% block latnav%}
+<div class="navbarlat">
+  <a class="nav-links-lat" href="{% url 'registrar_usuario' %}">
+    <li class="nav">
+        <i class="nav-icon fas fa-solid fa-plus"></i>
+        Agregar usuario
+    </li>
+  </a>
+  <a class="nav-links-lat" href="{% url 'buscar_usuario' %}">             
+    <li class="nav">
+      <i class="nav-icon fas fa-solid fa-pen"></i>
+      Eliminar o modificar usuarios
+    </li>
+  </a>
+</div>
+{%endblock%}
+
+
+{% block contenido%}
+<div class="productos">
+  <h1>Usuarios </h1>
+  <div class="lista-inputs">
+  <form action="{% url 'registrar_usuario' %}" method="POST">
+    {% csrf_token %}
+    {{form}}
+  </div>
+  <div class="boton">
+    <button name="guardar" type="submit" class="button"> GUARDAR </button>
+  </div>
+  </form>
+  {% if form.errors %}
+  <p>Error al registrar usuario</p>
+  {% endif %}
+</div>
+{%endblock%}

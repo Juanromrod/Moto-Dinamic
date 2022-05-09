@@ -1,0 +1,41 @@
+{% extends 'MotoDinamicApp/base.html'%}
+
+{%load humanize%}
+{%load static%}
+
+{% block style%}
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Productos.css" %}'>
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Eliminar.css" %}'>
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/AgregarProductos.css" %}'>
+{%endblock%}
+
+{% block contenido%}
+<div class="productos">
+  <h1>Productos</h1>
+  <div class="container">
+    <p>¿Seguro que desea eliminar el siguiente usuario?</p>
+    <div class="productCard">
+      <div class="imageCard">
+        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+      </div>
+      <div class="infoCard">
+        <h2> {{usuario.username}} <span>#{{usuario.id}}</span></h2>
+        <p class="info"> Nombre: {{usuario.first_name}} </p>
+        <p class="info"> Apellido: ${{usuario.last_name}} </p>
+        <p class="type"> {{usuario.email}} </p>
+      </div>
+    </div>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="botones">
+            <div class="boton">
+                <a href="/buscar_usuario"><div class="button" style="border: none;"> CANCELAR </div></a>
+            </div>
+            <div class="boton">
+                <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>
+            </div>
+        </div>
+    </form>
+  </div>
+</div>
+{%endblock%}

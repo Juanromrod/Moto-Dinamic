@@ -49,20 +49,21 @@
                 </a>
               </li>
               <li>
-                <a href="/usuario" class="nav-links">
+                <a href="{% url 'registrar_usuario'%}" class="nav-links">
                   Usuarios
                 </a>
               </li>
             </ul>
             <li class="signout">
-                <a id="signout" href="/" class="nav-links">
+                <a id="signout" href="{% url 'logout'%}" class="nav-links">
                   <li class="icono fas fa-sign-out-alt"></li>
-                  SIGN OUT
+                  SALIR
                 </a>
             </li>
         </nav>
         <div class="contenedor">
           <div class="latnav">
+            {% block latnav%}
             <h3>Productos & Servicios</h3>
             <div class="navbarlat">
               <a class="nav-links-lat" href="/productos">
@@ -90,6 +91,7 @@
                 </li>
               </a>
             </div>
+            {%endblock%}
           </div>
           {%block contenido%}
           {%endblock%}
