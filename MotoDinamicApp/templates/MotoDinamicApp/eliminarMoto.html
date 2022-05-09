@@ -10,18 +10,18 @@
 {%endblock%}
 
 {% block latnav %}
-<h3>Clientes</h3>
+<h3>Motos</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="/clientes">
+  <a class="nav-links-lat" href="/motos">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-plus"></i>
-      Agregar clientes
+      Motos
     </li>
   </a>
-  <a class="nav-links-lat" href="/editarcliente">
+  <a class="nav-links-lat" href="/editarmoto">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Eliminar o modificar clientes
+      Eliminar o modificar motos
     </li>
   </a>
 </div>
@@ -29,25 +29,25 @@
 
 {% block contenido%}
 <div class="productos">
-  <h1>Clientes </h1>
+  <h1>Motos</h1>
   <div class="container">
-    <p>¿Seguro que desea eliminar a este cliente?</p>
+    <p>¿Seguro que desea eliminar esta moto?</p>
     <div class="productCard">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
+        <img src='{% static "MotoDinamicApp/images/moto.jpg" %}' alt="producto" />
       </div>
       <div class="infoCard">
-        <h2> {{cliente.nombre}}</h2>
-        <p class="info"> Documento: {{cliente.identificacion}} </p>
-        <p class="info"> Celular: {{cliente.celular}} </p>
-        <p class="type">  {{cliente.correo}} </p>
+        <h2> {{miMoto.placa}}</h2>
+        <p class="info"> Color: {{miMoto.color}} </p>
+        <p class="info"> Marca: {{miMoto.marca}} </p>
+        <p class="type">  {{miMoto.modelo}} </p>
       </div>
     </div>
     <form action="" method="POST">
         {% csrf_token %}
         <div class="botones">
             <div class="boton">
-                <a href="/editarcliente"><div class="button" style="border: none;"> CANCELAR </div></a>
+                <a href="/editarmoto"><div class="button" style="border: none;"> CANCELAR </div></a>
             </div>
             <div class="boton">
                 <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>

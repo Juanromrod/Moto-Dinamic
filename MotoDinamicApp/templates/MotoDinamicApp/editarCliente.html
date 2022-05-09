@@ -48,7 +48,7 @@
     {%endfor%}
   </div>
   <div class="buscar">
-    <form action="{% url 'modelim_producto' %}" method="POST">
+    <form action="{% url 'modelim_cliente' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Número de cédula</span>
       <div class="searchinput">
@@ -69,7 +69,7 @@
             <p class="type">  {{cliente.correo}} </p>
           </div>
         </div>
-        <p class="editelim"><a class="editar" href="{% url 'editar_cliente' miCliente.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_cliente' miCliente.id %}">Eliminar</a></p>
+        <p class="editelim"><a class="editar" href="{% url 'editar_cliente' cliente.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_cliente' cliente.id %}">Eliminar</a></p>
       {%endif%}
     </form>
   </div>
