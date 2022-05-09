@@ -1,0 +1,82 @@
+.productCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 243, 243);
+    width: 360px;
+    height: 200px;
+    margin-left: 2%;
+    margin-top: 2%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px 0.1px rgb(70, 70, 70);
+}
+  
+.imageCard {
+    display: flex;
+    height: 100%;
+    width: 45%;
+}
+  
+.imageCard img {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px 0px 0px 20px;
+}
+  
+.infoCard {
+    display: flex;
+    width: 55%;
+    flex-direction: column;
+    padding-left: 2%;
+    padding-bottom: 5%;
+}
+  
+p {
+    display: block;
+    margin-top: 0px;
+}
+  
+h2 span {
+    color: #686868;
+    font-size: 1rem;
+}
+  
+.info {
+    color: #686868;
+}
+  
+.type {
+    color: #ed165f;
+}
+  
+#search {
+    margin-top: 15px;
+    padding: 15px;
+    width: 60%;
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 1rem;
+    border-style: solid;
+}
+  
+.searchinput {
+   display: flex;
+}
+  
+.btn {
+    display: inline;
+    font-weight: 300;
+    background-color: #7db240;
+    color: #F5F5F5;
+    width: 80px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    border-style: none;
+}
