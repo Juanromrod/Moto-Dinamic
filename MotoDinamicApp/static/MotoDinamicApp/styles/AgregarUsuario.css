@@ -35,13 +35,18 @@ label{
   height: 25px;
 }
 
-span.ul{
+span ul{
   font-size: 0.7rem;
+  padding-left: 12px;
+  text-decoration: none;
 }
 
 span{
   display:inline-block;
   font-size: 0.7rem;
+  margin-left: 50px;
+  margin-top: -20px;
+  margin-bottom: 20px;
 }
 
 

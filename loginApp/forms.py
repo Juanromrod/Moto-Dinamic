@@ -15,4 +15,6 @@ class RegistroUsuarioForm(UserCreationForm):
         super(RegistroUsuarioForm,self).__init__(*args, **kwargs)
         self.fields['username'].label = 'Usuario'
         self.fields['password1'].label = 'Contraseña'
+        self.fields['password1'].widget.attrs['render_value'] = 'True'
+        self.fields['password2'].widget.attrs['render_value'] = 'True'
         self.fields['password2'].label = 'Confirmar Contraseña'

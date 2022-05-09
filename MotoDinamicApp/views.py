@@ -8,10 +8,6 @@ import MotoDinamicApp
 from MotoDinamicApp.models import Producto, Servicio, TipoProducto, TipoServicio
 from .forms import inputProducto, inputServicio, inputTipoProducto, inputTipoServicio
 
-
-def index(request):
-    return HttpResponse("bienvenidos a motodinamic")
-
 # Create your views here.
 def insertarTipoProducto(request):
     if request.method == 'GET':

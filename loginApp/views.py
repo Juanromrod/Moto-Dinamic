@@ -50,17 +50,6 @@ def modelimUsuario(request):
         miUsuario = User.objects.get(username = myUser)
         return render(request, 'authenticate/editarUsuario.html', {'usuario': miUsuario , 'usuarios': usuarios})
 
-def editarUsuario(request, pk):
-    usuario = User.objects.get(username = pk)
-    form = RegistroUsuarioForm(instance=usuario)
-    if request.method == 'GET':
-        return render(request, 'authenticate/registrar_usuario.html', {'form': form})
-    if request.method == 'POST':
-        myUser = RegistroUsuarioForm(request.POST, instance=usuario)
-        if myUser.is_valid():
-            myUser.save()
-        return redirect('editar_usuario', pk)
-
 def eliminarUsuario(request, pk):
     usuario = User.objects.get(username = pk)
     if request.method == 'GET':

@@ -19,7 +19,13 @@
   <a class="nav-links-lat" href="{% url 'buscar_usuario' %}">             
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Eliminar o modificar usuarios
+      Eliminar usuarios
+    </li>
+  </a>
+  <a class="nav-links-lat" href="/admin">             
+    <li class="nav">
+      <i class="nav-icon fas fa-solid fa-pen"></i>
+      Modo administrador
     </li>
   </a>
 </div>
@@ -38,7 +44,7 @@
       <div class="infoCard">
         <h2> {{myUser.username}} <span>#{{myUser.id}}</span></h2>
         <p class="info"> Nombre: {{myUser.first_name}}</p>
-        <p class="info"> Apellido: ${{myUser.last_name}} </p>
+        <p class="info"> Apellido: {{myUser.last_name}} </p>
         <p class="type"> {{myUser.email}} </p>
       </div>
       </div>
@@ -64,11 +70,11 @@
           <div class="infoCard">
            <h2> {{usuario.username}}</h2>
            <p class="info"> Nombre: {{usuario.first_name}} </p>
-           <p class="info"> Apellido: ${{usuario.last_name}} </p>
+           <p class="info"> Apellido: {{usuario.last_name}} </p>
            <p class="type"> {{usuario.email}} </p>
           </div>
         </div>
-        <p class="editelim"><a class="editar" href="{% url 'editar_usuario' usuario.username %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_usuario' usuario.username %}">Eliminar</a></p>
+        <p class="editelim"><a class="eliminar" href="{% url 'eliminar_usuario' usuario.username %}">Eliminar</a></p>
       {%endif%}
     </form>
   </div>
