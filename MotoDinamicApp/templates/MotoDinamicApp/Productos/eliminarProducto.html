@@ -9,12 +9,12 @@
 <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Agregar.css" %}'>
 {%endblock%}
 
-{% block contenido%}
-<div class="productos">
+{% block content%}
+<div class="content">
   <h1>Productos</h1>
   <div class="container">
     <p>¿Seguro que desea eliminar el siguiente producto?</p>
-    <div class="productCard">
+    <div class="card">
       <div class="imageCard">
         <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
       </div>
@@ -29,7 +29,7 @@
         {% csrf_token %}
         <div class="botones">
             <div class="boton">
-                <a href="/editarproducto"><div class="button" style="border: none;"> CANCELAR </div></a>
+                <a href="{% url 'modelim_producto' %}"><div class="button" style="border: none;"> CANCELAR </div></a>
             </div>
             <div class="boton">
                 <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>

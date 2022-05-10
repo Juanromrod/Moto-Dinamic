@@ -12,22 +12,22 @@
 {% block latnav %}
 <h3>Motos</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="/motos">
+  <a class="nav-links-lat" href="{% url 'motos' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-plus"></i>
       Motos
     </li>
   </a>
-  <a class="nav-links-lat" href="/editarmoto">
+  <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Eliminar o modificar motos
+      Editar Motos
     </li>
   </a>
 </div>
 {%endblock%}
 
-{% block contenido%}
+{% block content%}
 <div class="productos">
   <h1>Motos</h1>
   <div class="container">
@@ -47,7 +47,7 @@
         {% csrf_token %}
         <div class="botones">
             <div class="boton">
-                <a href="/editarmoto"><div class="button" style="border: none;"> CANCELAR </div></a>
+                <a href="{% url 'modelim_moto' %}"><div class="button" style="border: none;"> CANCELAR </div></a>
             </div>
             <div class="boton">
                 <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>

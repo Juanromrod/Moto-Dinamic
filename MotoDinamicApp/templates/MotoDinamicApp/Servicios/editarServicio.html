@@ -8,13 +8,13 @@
 <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Eliminar.css" %}'>
 {%endblock%}
 
-{% block contenido%}
-<div class="productos">
+{% block content%}
+<div class="content">
   <h1>Servicios </h1>
-  <div class="lista">
+  <div class="list">
     {%for miServicio in servicios%}
     <div>
-      <div class="productCard">
+      <div class="card">
       <div class="imageCard">
         <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
       </div>
@@ -28,7 +28,7 @@
     </div>
     {%endfor%}
   </div>
-  <div class="buscar">
+  <div class="searchDiv">
     <form action="{% url 'modelim_servicio' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Código</span>
@@ -39,7 +39,7 @@
         </div>
       </div>
       {%if servicio%}
-        <div style="margin-top: 30px;" class="productCard">
+        <div style="margin-top: 30px;" class="card">
           <div class="imageCard">
           <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
           </div>

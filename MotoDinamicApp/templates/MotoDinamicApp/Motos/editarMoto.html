@@ -11,28 +11,28 @@
 {% block latnav %}
 <h3>Motos</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="/motos">
+  <a class="nav-links-lat" href="{% url 'motos' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-plus"></i>
       Motos
     </li>
   </a>
-  <a class="nav-links-lat" href="/editarmoto">
+  <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Eliminar o modificar motos
+      Editar Motos
     </li>
   </a>
 </div>
 {%endblock%}
 
-{% block contenido%}
-<div class="productos">
+{% block content%}
+<div class="content">
   <h1>Motos</h1>
-  <div class="lista">
+  <div class="list">
     {%for miMoto in motos%}
     <div>
-      <div class="productCard">
+      <div class="card">
         <div class="imageCard">
           <img src='{% static "MotoDinamicApp/images/moto.jpg" %}' alt="producto" />
         </div>
@@ -47,7 +47,7 @@
     </div>
     {%endfor%}
   </div>
-  <div class="buscar">
+  <div class="searchDiv">
     <form action="{% url 'modelim_moto' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Número de placa</span>
@@ -58,7 +58,7 @@
         </div>
       </div>
       {%if cliente%}
-        <div style="margin-top: 30px;" class="productCard">
+        <div style="margin-top: 30px;" class="card">
           <div class="imageCard">
             <img src='{% static "MotoDinamicApp/images/moto.jpg" %}' alt="producto" />
           </div>

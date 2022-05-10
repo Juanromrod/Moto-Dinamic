@@ -5,16 +5,16 @@
 {% block latnav %}
 <h3>Clientes</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="/clientes">
+  <a class="nav-links-lat" href="{% url 'clientes' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-plus"></i>
-      Agregar clientes
+      Clientes
     </li>
   </a>
-  <a class="nav-links-lat" href="/editarcliente">
+  <a class="nav-links-lat" href="{% url 'modelim_cliente' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Eliminar o modificar clientes
+      Editar clientes
     </li>
   </a>
 </div>
@@ -24,13 +24,13 @@
 <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
 {%endblock%}
 
-{% block contenido %}
-<div class="productos">
-  <h1>Clientes <a style="margin-left: 15px;" href="/crearcliente"><i class="add fas fa-solid fa-plus"></i></a></h1>
-  <div class="lista">
+{% block content %}
+<div class="content">
+  <h1>Clientes <a style="margin-left: 15px;" href="{% url 'insertar_cliente' %}"><i class="add fas fa-solid fa-plus"></i></a></h1>
+  <div class="list">
     {%for miCliente in clientes%}
     <div>
-      <div class="productCard">
+      <div class="card">
         <div class="imageCard">
           <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
         </div>
@@ -46,20 +46,18 @@
     </div>
     {%endfor%}
   </div>
-  <div class="buscar">
+  <div class="searchDiv">
     <form action="{% url 'clientes' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Número de cédula</span>
       <div class="searchinput">
         <input type="text" name='clienteId' id="search">
-        {% block busqueda %}
-        {% endblock %}
         <div class="lupa">
           <button class="btn" type="submit">Buscar</button>
         </div>
       </div>
       {%if cliente%}
-      <div style="margin-top: 30px;" class="productCard">
+      <div style="margin-top: 30px;" class="card">
         <div class="imageCard">
           <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
         </div>
