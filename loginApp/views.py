@@ -7,6 +7,8 @@ from .forms import RegistroUsuarioForm
 import loginApp
 from django.contrib.auth.models import User
 from .forms import RegistroUsuarioForm
+from .decorators import superuser_required
+
 
 def login_user(request):
     if request.method == "POST":

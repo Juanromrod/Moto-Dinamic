@@ -8,6 +8,7 @@
 {%endblock%}
 
 {% block latnav%}
+{% if user.is_superuser %}
 <div class="navbarlat">
   <a class="nav-links-lat" href="{% url 'registrar_usuario' %}">
     <li class="nav">
@@ -28,10 +29,12 @@
     </li>
   </a>
 </div>
+{% endif %}
 {%endblock%}
 
 
 {% block contenido%}
+{% if user.is_superuser %}
 <div class="productos">
   <h1>Usuarios </h1>
   <div class="lista-inputs">
@@ -47,4 +50,9 @@
   <p>Error al registrar usuario</p>
   {% endif %}
 </div>
+{% else %}
+<div style="height:50px;">
+<h1 style="margin-left:50%; margin-top:200px;">Lo sentimos, necesitas permiso de administrado y lo sabes!</h1>
+</div>
+{% endif %}
 {%endblock%}

@@ -49,9 +49,11 @@
                 </a>
               </li>
               <li>
+                {% if user.is_superuser %}
                 <a href="{% url 'registrar_usuario'%}" class="nav-links">
                   Usuarios
                 </a>
+                {% endif %}
               </li>
             </ul>
             <li class="signout">

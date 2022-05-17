@@ -5,11 +5,14 @@ from itertools import product
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import MotoDinamicApp
+from django.contrib.auth.decorators import login_required
+
 
 from MotoDinamicApp.models import Cliente, Producto, Servicio, TipoProducto, Moto
 from .forms import inputCliente, inputProducto, inputServicio, inputTipoProducto, inputTipoServicio, inputMoto
 
 # Create your views here.
+@login_required(login_url='/')
 def insertarTipoProducto(request):
     if request.method == 'GET':
         form = inputTipoProducto()
@@ -21,6 +24,7 @@ def insertarTipoProducto(request):
         return redirect('insertar_tipoproducto')
     return HttpResponse("funcion insertar")
 
+@login_required(login_url='/')
 def insertarTipoServicio(request):
     if request.method == 'GET':
         form = inputTipoServicio()
@@ -31,6 +35,7 @@ def insertarTipoServicio(request):
             myTipoServicio.save()
         return redirect('insertar_tiposervicio')
 
+@login_required(login_url='/')
 def getTipoProducto(request):
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/searchTipoProducto.html')
@@ -39,6 +44,7 @@ def getTipoProducto(request):
         myTipoProducto = TipoProducto.objects.get(id = myId)
         return HttpResponse(myTipoProducto.nombre)
 
+@login_required(login_url='/')
 def Productos(request):
     productos = Producto.objects.all()
     if request.method == "GET":
@@ -48,6 +54,7 @@ def Productos(request):
         miProducto = Producto.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/Productos.html', {'product': miProducto , 'products': productos})
 
+@login_required(login_url='/')
 def insertarProducto(request):
     if request.method == 'GET':
         form = inputProducto()
@@ -58,6 +65,7 @@ def insertarProducto(request):
             myProducto.save()
         return redirect('insertar_producto')
 
+@login_required(login_url='/')
 def modelimProducto(request):
     products = Producto.objects.all()
     if request.method == "GET":
@@ -67,6 +75,7 @@ def modelimProducto(request):
         miProducto = Producto.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/editarProducto.html', {'product': miProducto , 'products': products})
 
+@login_required(login_url='/')
 def editarProducto(request, pk):
     producto = Producto.objects.get(id = pk)
     form = inputProducto(instance=producto)
@@ -78,6 +87,7 @@ def editarProducto(request, pk):
             myProducto.save()
         return redirect('editar_producto', pk)
 
+@login_required(login_url='/')
 def eliminarProducto(request, pk):
     producto = Producto.objects.get(id = pk)
     if request.method == 'GET':
@@ -86,6 +96,7 @@ def eliminarProducto(request, pk):
         producto.delete()
         return redirect('modelim_producto')
 
+@login_required(login_url='/')
 def Servicios(request):
     servicios = Servicio.objects.all()
     if request.method == "GET":
@@ -95,6 +106,7 @@ def Servicios(request):
         miServicio = Servicio.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
 
+@login_required(login_url='/')
 def insertarServicio(request):
     if request.method == 'GET':
         form = inputServicio()
@@ -105,6 +117,7 @@ def insertarServicio(request):
             myServicio.save()
         return redirect('insertar_servicio')
 
+@login_required(login_url='/')
 def modelimServicio(request):
     servicios = Servicio.objects.all()
     if request.method == "GET":
@@ -114,6 +127,7 @@ def modelimServicio(request):
         miServicio = Servicio.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/editarServicio.html', {'servicio': miServicio , 'servicios': servicios})
 
+@login_required(login_url='/')
 def editarServicio(request, pk):
     servicio = Servicio.objects.get(id = pk)
     form = inputServicio(instance=servicio)
@@ -125,6 +139,7 @@ def editarServicio(request, pk):
             miServicio.save()
         return redirect('editar_servicio', pk)
 
+@login_required(login_url='/')
 def eliminarServicio(request, pk):
     servicio = Servicio.objects.get(id = pk)
     if request.method == 'GET':
@@ -133,6 +148,7 @@ def eliminarServicio(request, pk):
         servicio.delete()
         return redirect('modelim_servicio')
 
+@login_required(login_url='/')
 def Clientes(request):
     clientes = Cliente.objects.all()
     if request.method == "GET":
@@ -142,6 +158,7 @@ def Clientes(request):
         miCliente = Cliente.objects.get(identificacion = miId)
         return render(request, 'MotoDinamicApp/Clientes.html', {'cliente': miCliente , 'clientes': clientes})
 
+@login_required(login_url='/')
 def insertarCliente(request):
     if request.method == 'GET':
         form = inputCliente()
@@ -152,6 +169,7 @@ def insertarCliente(request):
             miCliente.save()
         return redirect('insertar_cliente')
 
+@login_required(login_url='/')
 def modelimCliente(request):
     clientes = Cliente.objects.all()
     if request.method == "GET":
@@ -161,6 +179,7 @@ def modelimCliente(request):
         miCliente = Cliente.objects.get(identificacion = miId)
         return render(request, 'MotoDinamicApp/editarCliente.html', {'cliente': miCliente , 'clientes': clientes})
 
+@login_required(login_url='/')
 def editarCliente(request, pk):
     cliente = Cliente.objects.get(id = pk)
     form = inputCliente(instance=cliente)
@@ -172,6 +191,7 @@ def editarCliente(request, pk):
             miCliente.save()
         return redirect('editar_cliente', pk)
 
+@login_required(login_url='/')
 def eliminarCliente(request, pk):
     cliente = Cliente.objects.get(id = pk)
     if request.method == 'GET':
@@ -180,6 +200,7 @@ def eliminarCliente(request, pk):
         cliente.delete()
         return redirect('modelim_cliente')
 
+@login_required(login_url='/')
 def Motos(request):
     motos = Moto.objects.all()
     if request.method == "GET":
@@ -189,6 +210,7 @@ def Motos(request):
         miMoto = Moto.objects.get(placa = miId)
         return render(request, 'MotoDinamicApp/Motos.html', {'moto': miMoto , 'motos': motos})
 
+@login_required(login_url='/')
 def insertarMoto(request):
     if request.method == 'GET':
         form = inputMoto()
@@ -199,6 +221,7 @@ def insertarMoto(request):
             miMoto.save()
         return redirect('insertar_moto')
 
+@login_required(login_url='/')
 def modelimMoto(request):
     motos = Moto.objects.all()
     if request.method == "GET":
@@ -208,6 +231,7 @@ def modelimMoto(request):
         miMoto = Moto.objects.get(placa = miId)
         return render(request, 'MotoDinamicApp/editarMoto.html', {'moto': miMoto , 'motos': motos})
 
+@login_required(login_url='/')
 def editarMoto(request, pk):
     moto = Moto.objects.get(id = pk)
     form = inputMoto(instance=moto)
@@ -219,6 +243,7 @@ def editarMoto(request, pk):
             miMoto.save()
         return redirect('editar_moto', pk)
 
+@login_required(login_url='/')
 def eliminarMoto(request, pk):
     moto = Moto.objects.get(id = pk)
     if request.method == 'GET':
