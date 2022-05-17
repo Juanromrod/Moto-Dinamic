@@ -37,7 +37,7 @@ class inputServicio(forms.ModelForm):
 class inputCliente(forms.ModelForm):
     class Meta:
         model = Cliente
-        fields = ['identificacion', 'nombre', 'celular', 'correo', 'direccion']
+        fields = ['identificacion', 'nombre', 'celular', 'correo', 'ciudad', 'direccion']
     def __init__(self, *args, **kwargs):
         super(inputCliente, self).__init__(*args, **kwargs)
         self.fields['identificacion'].label = 'Cédula de ciudadania'

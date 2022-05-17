@@ -17,23 +17,23 @@
         <nav class="NavbarItems">
             <ul class="nav-menu">
               <li>
-                <a href="/productos" class="nav-links">
+                <a href="{% url 'productos' %}" class="nav-links">
                   Productos & Servicios
                 </a>
               </li>
               <li>
-                <a href="/clientes" class="nav-links">
+                <a href="{% url 'clientes' %}" class="nav-links">
                   Clientes
                 </a>
               </li>
               <li>
-                <a href="/motos" class="nav-links">
+                <a href="{% url 'motos' %}" class="nav-links">
                   Motos
                 </a>
               </li>
               <li>
-                <a href="/ordenes" class="nav-links">
-                  Órdenes de ingreso
+                <a href="{% url 'facturacion_p' %}" class="nav-links">
+                  Facturación
                 </a>
               </li>
             </ul>

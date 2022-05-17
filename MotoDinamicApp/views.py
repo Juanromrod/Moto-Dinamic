@@ -1,12 +1,12 @@
+from asyncio.windows_events import NULL
 from contextlib import redirect_stderr
 from ctypes.wintypes import HLOCAL
 from http import client
 from itertools import product
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-import MotoDinamicApp
-
-from MotoDinamicApp.models import Cliente, Producto, Servicio, TipoProducto, Moto
+from .cart import Carrito
+from MotoDinamicApp.models import Ciudad, Cliente, Producto, Servicio, TipoProducto, Moto
 from .forms import inputCliente, inputProducto, inputServicio, inputTipoProducto, inputTipoServicio, inputMoto
 
 
@@ -41,6 +41,8 @@ def getTipoProducto(request):
         return HttpResponse(myTipoProducto.nombre)
 
 def Productos(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
     productos = Producto.objects.all()
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/Productos/Productos.html', {'products': productos})
@@ -88,6 +90,8 @@ def eliminarProducto(request, pk):
         return redirect('modelim_producto')
 
 def Servicios(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
     servicios = Servicio.objects.all()
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/Servicios/Servicios.html', {'servicios': servicios})
@@ -135,7 +139,14 @@ def eliminarServicio(request, pk):
         return redirect('modelim_servicio')
 
 def Clientes(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
     clientes = Cliente.objects.all()
+    ciudades = ['Bogotá', 'Medellin', 'Cali', 'Barranquilla', 'Cartagena', 'Ibagué', 'Santa Marta', 'Manizales', 'Pereira', 'Neiva','Pasto', 'Armenia']
+    if(len(Ciudad.objects.all()) == 0):
+        for c in ciudades:
+            ciudad = Ciudad.objects.create(nombre = c)
+            ciudad.save()
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/Clientes/Clientes.html', {'clientes': clientes})
     if request.method == 'POST':
@@ -182,6 +193,8 @@ def eliminarCliente(request, pk):
         return redirect('modelim_cliente')
 
 def Motos(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
     motos = Moto.objects.all()
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/Motos/Motos.html', {'motos': motos})
@@ -227,3 +240,74 @@ def eliminarMoto(request, pk):
     if request.method == 'POST':
         moto.delete()
         return redirect('modelim_moto')
+
+def facturacionP(request):
+    productos = Producto.objects.all()
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'products': productos})
+    if request.method == 'POST':
+        myId = request.POST['productId']
+        miProducto = Producto.objects.get(id = myId)
+        return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'product': miProducto , 'products': productos})
+
+
+def facturacionS(request):
+    servicios = Servicio.objects.all()
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicios': servicios})
+    if request.method == 'POST':
+        myId = request.POST['servicioId']
+        miServicio = Servicio.objects.get(id = myId)
+        return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
+
+def agregar_producto(request, producto_id):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id = producto_id)
+    carrito.agregarP(producto)
+    return redirect('facturacion_p')
+
+def agregar_servicio(request, servicio_id):
+    carrito = Carrito(request)
+    servicio = Servicio.objects.get(id = servicio_id)
+    carrito.agregarS(servicio)
+    return redirect('facturacion_s')
+
+def aumentar_producto(request, producto_id):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id = producto_id)
+    carrito.agregarP(producto)
+    return redirect('carrito')
+
+def eliminar_producto(request, producto_id):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id=producto_id)
+    carrito.eliminarP(producto)
+    return redirect('carrito')
+
+def eliminar_servicio(request, servicio_id):
+    carrito = Carrito(request)
+    servicio = Servicio.objects.get(id=servicio_id)
+    carrito.eliminarS(servicio)
+    return redirect('carrito')
+
+def restar_producto(request, producto_id):
+    carrito = Carrito(request)
+    producto = Producto.objects.get(id=producto_id)
+    carrito.restar(producto)
+    return redirect('carrito')
+
+def limpiar_carrito(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect('facturacion_p')
+
+def CarritoCompras(request):
+    form = inputCliente()
+    clientes = Cliente.objects.all()
+    carrito = Carrito(request)
+    if request.method == 'GET':
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'form': form})
+    if request.method == 'POST':
+        miId = request.POST['clienteId']
+        miCliente = Cliente.objects.get(identificacion = miId)
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente , 'clientes': clientes, 'form': form})

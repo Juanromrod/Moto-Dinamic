@@ -10,6 +10,19 @@
     border-radius: 20px;
     box-shadow: 0px 0px 5px 0.1px rgb(70, 70, 70);
 }
+
+.cardcart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 243, 243);
+    width: 290px;
+    margin-left: 50px;
+    height: 150px;
+    margin-top: 2%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px 0.1px rgb(70, 70, 70);
+}
   
 .imageCard {
     display: flex;
@@ -44,10 +57,12 @@ h2 span {
   
 .info {
     color: #686868;
+    font-weight: bold;
 }
   
-.type {
+.type { 
     color: #ed165f;
+    font-weight: bold;
 }
   
 #search {
@@ -69,7 +84,6 @@ h2 span {
     font-weight: 300;
     background-color: #7db240;
     color: #F5F5F5;
-    width: 80px;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-right: 15px;
@@ -79,4 +93,34 @@ h2 span {
     border-radius: 6px;
     cursor: pointer;
     border-style: none;
+}
+
+.btn2 {
+    font-weight: 300;
+    font-size: 1.8rem;
+    background-color: #7db240;
+    color: #F5F5F5;
+    padding-top: 20px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-bottom: 20px;
+    margin-left: 130px;
+    margin-bottom: 100px;
+    border-radius: 6px;
+    cursor: pointer;
+    border-style: none;
+}
+
+.sum {
+    background-color: #7db240;
+    border-radius: 5px 0px 0px 5px;
+    color: #000000;
+    padding: 0px 5px 0px 5px;
+}
+
+.sub {
+    background-color: #7db240;
+    border-radius: 0px 5px 5px 0px;
+    color: #000000;
+    padding: 0px 5px 0px 5px;
 }
