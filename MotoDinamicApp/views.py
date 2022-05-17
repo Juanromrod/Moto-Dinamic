@@ -9,6 +9,20 @@ from .cart import Carrito
 from MotoDinamicApp.models import Ciudad, Cliente, Producto, Servicio, TipoProducto, Moto
 from .forms import inputCliente, inputProducto, inputServicio, inputTipoProducto, inputTipoServicio, inputMoto
 from django.contrib.auth.decorators import login_required
+"""from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import User
+
+class Command(BaseCommand):
+
+    def handle(self, *args, **options):
+
+        # The magic line
+        User.objects.create_superuser(username= 'admin',
+                                email='motodinamic@gmail.com',
+                                password='motodinamic',
+                                is_staff=True,
+                                is_active=True,
+                                is_superuser=True)"""
 
 # Create your views here.
 @login_required(login_url='/')
@@ -264,6 +278,7 @@ def eliminarMoto(request, pk):
         moto.delete()
         return redirect('modelim_moto')
 
+@login_required(login_url='/')
 def facturacionP(request):
     productos = Producto.objects.all()
     if request.method == "GET":
@@ -273,7 +288,7 @@ def facturacionP(request):
         miProducto = Producto.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'product': miProducto , 'products': productos})
 
-
+@login_required(login_url='/')
 def facturacionS(request):
     servicios = Servicio.objects.all()
     if request.method == "GET":
@@ -283,47 +298,55 @@ def facturacionS(request):
         miServicio = Servicio.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
 
+@login_required(login_url='/')
 def agregar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = Producto.objects.get(id = producto_id)
     carrito.agregarP(producto)
     return redirect('facturacion_p')
 
+@login_required(login_url='/')
 def agregar_servicio(request, servicio_id):
     carrito = Carrito(request)
     servicio = Servicio.objects.get(id = servicio_id)
     carrito.agregarS(servicio)
     return redirect('facturacion_s')
 
+@login_required(login_url='/')
 def aumentar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = Producto.objects.get(id = producto_id)
     carrito.agregarP(producto)
     return redirect('carrito')
 
+@login_required(login_url='/')
 def eliminar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = Producto.objects.get(id=producto_id)
     carrito.eliminarP(producto)
     return redirect('carrito')
 
+@login_required(login_url='/')
 def eliminar_servicio(request, servicio_id):
     carrito = Carrito(request)
     servicio = Servicio.objects.get(id=servicio_id)
     carrito.eliminarS(servicio)
     return redirect('carrito')
 
+@login_required(login_url='/')
 def restar_producto(request, producto_id):
     carrito = Carrito(request)
     producto = Producto.objects.get(id=producto_id)
     carrito.restar(producto)
     return redirect('carrito')
 
+@login_required(login_url='/')
 def limpiar_carrito(request):
     carrito = Carrito(request)
     carrito.limpiar()
     return redirect('facturacion_p')
 
+@login_required(login_url='/')
 def CarritoCompras(request):
     form = inputCliente()
     clientes = Cliente.objects.all()

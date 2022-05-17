@@ -7,10 +7,15 @@ from .forms import RegistroUsuarioForm
 import loginApp
 from django.contrib.auth.models import User
 from .forms import RegistroUsuarioForm
-from .decorators import superuser_required
 
 
 def login_user(request):
+    """User.objects.create_superuser(username= 'admin',
+                                email='motodinamic@gmail.com',
+                                password='motodinamic',
+                                is_staff=True,
+                                is_active=True,
+                                is_superuser=True)"""
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']

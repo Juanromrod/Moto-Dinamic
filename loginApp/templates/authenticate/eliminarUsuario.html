@@ -12,6 +12,7 @@
 
 {% block latnav%}
 {% if user.is_superuser %}
+<h3>Usuarios</h3>
 <div class="navbarlat">
   <a class="nav-links-lat" href="{% url 'registrar_usuario' %}">
     <li class="nav">
@@ -36,7 +37,7 @@
 {%endblock%}
 
 
-{% block contenido%}
+{% block content%}
 {% if user.is_superuser %}
 <div class="productos">
   <h1>Usuarios</h1>
