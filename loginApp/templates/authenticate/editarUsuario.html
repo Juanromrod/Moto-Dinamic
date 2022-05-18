@@ -37,9 +37,9 @@
 
 {% block content%}
 {% if user.is_superuser %}
-<div class="productos">
+<div class="content">
   <h1>Usuarios </h1>
-  <div class="lista">
+  <div class="list">
     {%for myUser in usuarios%}
     <div>
       <div class="card">
@@ -57,7 +57,7 @@
     </div>
     {%endfor%}
   </div>
-  <div class="buscar">
+  <div class="searchDiv">
     <form action="{% url 'buscar_usuario' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Usuario</span>
