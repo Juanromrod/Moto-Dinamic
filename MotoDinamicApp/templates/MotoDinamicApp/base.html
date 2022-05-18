@@ -17,22 +17,22 @@
         <nav class="NavbarItems">
             <ul class="nav-menu">
               <li>
-                <a href="/productos" class="nav-links">
+                <a href="{% url 'productos' %}" class="nav-links">
                   Productos & Servicios
                 </a>
               </li>
               <li>
-                <a href="/clientes" class="nav-links">
+                <a href="{% url 'clientes' %}" class="nav-links">
                   Clientes
                 </a>
               </li>
               <li>
-                <a href="/motos" class="nav-links">
+                <a href="{% url 'motos' %}" class="nav-links">
                   Motos
                 </a>
               </li>
               <li>
-                <a href="/ordenes" class="nav-links">
+                <a href="/" class="nav-links">
                   Órdenes de ingreso
                 </a>
               </li>
@@ -44,7 +44,7 @@
             </div>
             <ul class="nav-menu">
               <li>
-                <a href="/facturacion" class="nav-links">
+                <a href="{% url 'facturacion_p' %}" class="nav-links">
                   Facturación
                 </a>
               </li>
@@ -63,51 +63,51 @@
                 </a>
             </li>
         </nav>
-        <div class="contenedor">
+        <div class="body">
           <div class="latnav">
             {%block latnav%}
             <h3>Productos & Servicios</h3>
             <div class="navbarlat">
-              <a class="nav-links-lat" href="/productos">
+              <a class="nav-links-lat" href="{% url 'productos' %}">
                 <li class="nav">
                     <i class="nav-icon fas fa-solid fa-plus"></i>
                     Productos
                 </li>
               </a>
-              <a class="nav-links-lat" href="/editarproducto">             
+              <a class="nav-links-lat" href="{% url 'modelim_producto' %}">             
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-pen"></i>
-                  Eliminar o modificar productos
+                  Editar productos
                 </li>
               </a>
-              <a class="nav-links-lat" href="/servicios">           
+              <a class="nav-links-lat" href="{% url 'servicios' %}">           
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-plus"></i>
                   Servicios
                 </li>
               </a>
-              <a class="nav-links-lat" href="/editarservicio">          
+              <a class="nav-links-lat" href="{% url 'modelim_servicio' %}">          
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-pen"></i>
-                  Eliminar o modificar servicios
+                  Editar servicios
                 </li>
               </a>
             </div>
             {%endblock%}
           </div>
-          {%block contenido%}
+          {%block content%}
           {%endblock%}
         </div>
         <div class="footer">
           <div class="footer-content">
-            <div class="footer-section foto">
+            <div class="footer-section photo">
               <img src='{% static "MotoDinamicApp/images/logo-02.png" %}' class="logo-footer"/>
             </div>
             <div class="footer-bottom">
               &copy; MOTODINAMIC 2022
             </div>
             <div class="footer-section contactar">
-              <div class="texto">
+              <div class="text">
                 50 #17-50 Sur, Bogotá D.C
                 </br>
                 +57 3205398442

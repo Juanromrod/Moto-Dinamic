@@ -11,6 +11,7 @@
 
 {% block latnav%}
 {% if user.is_superuser %}
+<h3>Usuarios</h3>
 <div class="navbarlat">
   <a class="nav-links-lat" href="{% url 'registrar_usuario' %}">
     <li class="nav">
@@ -34,14 +35,14 @@
 {%endif%}
 {%endblock%}
 
-{% block contenido%}
+{% block content%}
 {% if user.is_superuser %}
-<div class="productos">
+<div class="content">
   <h1>Usuarios </h1>
-  <div class="lista">
+  <div class="list">
     {%for myUser in usuarios%}
     <div>
-      <div class="productCard">
+      <div class="card">
       <div class="imageCard">
         <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
       </div>
@@ -56,7 +57,7 @@
     </div>
     {%endfor%}
   </div>
-  <div class="buscar">
+  <div class="searchDiv">
     <form action="{% url 'buscar_usuario' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Usuario</span>

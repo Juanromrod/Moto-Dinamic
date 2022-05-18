@@ -10,6 +10,12 @@ from .forms import RegistroUsuarioForm
 
 
 def login_user(request):
+    """User.objects.create_superuser(username= 'admin',
+                                email='motodinamic@gmail.com',
+                                password='motodinamic',
+                                is_staff=True,
+                                is_active=True,
+                                is_superuser=True)"""
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']

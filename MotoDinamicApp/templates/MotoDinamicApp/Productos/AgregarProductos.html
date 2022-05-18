@@ -1,0 +1,23 @@
+{% extends 'MotoDinamicApp/base.html'%}
+
+{%load static%}
+
+{% block style%}
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Agregar.css" %}'>
+{%endblock%}
+
+
+{% block content%}
+<div class="content">
+  <h1>Productos </h1>
+  <div class="lista-inputs">
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{form}}
+  </div>
+  <div>
+    <button name="guardar" type="submit" class="button"> GUARDAR </button>
+  </div>
+  </form>
+</div>
+{%endblock%}

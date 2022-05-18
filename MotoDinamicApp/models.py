@@ -20,24 +20,30 @@ class TipoServicio(models.Model):
     def __str__(self):
         return self.nombre
 
+class Ciudad(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __str__(self):
+        return self.nombre
+
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     precio = models.IntegerField()
     desc = models.CharField(max_length=128)
     idTipoServicio = models.ForeignKey(TipoServicio, on_delete=PROTECT)
 
-
 class Cliente(models.Model):
     identificacion = models.CharField(max_length=30)
     nombre = models.CharField(max_length=30)
     celular = models.CharField(max_length=15)
     correo = models.CharField(max_length=128)
+    ciudad = models.ForeignKey(Ciudad, on_delete=PROTECT)
     direccion = models.CharField(max_length=128)
     
 
 class Moto(models.Model):
     placa = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
+    kilometraje = models.IntegerField()
     marca = models.CharField(max_length=30)
     modelo = models.CharField(max_length=30)    
 
@@ -50,6 +56,7 @@ class OrdenDeIngreso(models.Model):
 class Factura(models.Model):
     fecha = models.DateTimeField()
     iva = models.IntegerField()
+    cantidad = models.IntegerField()
     total = models.IntegerField()
 
 class Cliente_Factura(models.Model):
@@ -59,6 +66,7 @@ class Cliente_Factura(models.Model):
 class Factura_Producto(models.Model):
     idFactura = models.ForeignKey(Factura, on_delete=PROTECT)
     idProducto = models.ForeignKey(Producto, on_delete=PROTECT)
+    cantidad = models.IntegerField()
 
 class Factura_Servicio(models.Model):
     idFactura = models.ForeignKey(Factura, on_delete=PROTECT)

@@ -26,4 +26,15 @@ urlpatterns = [
     path('editarmoto/', views.modelimMoto, name='modelim_moto'),
     path('editarM/<str:pk>/', views.editarMoto, name='editar_moto'),
     path('eliminarM/<str:pk>/', views.eliminarMoto, name='eliminar_moto'),
+    path('facturarproductos/', views.facturacionP, name='facturacion_p'),
+    path('facturarservicios/', views.facturacionS, name='facturacion_s'),
+    path('agregarP/<int:producto_id>/', views.agregar_producto, name='añadir_producto'),
+    path('agregarS/<int:servicio_id>/', views.agregar_servicio, name='añadir_servicio'),
+    path('aumentarP/<int:producto_id>/', views.aumentar_producto, name='aumentar_producto'),
+    path('eliminarPC/<int:producto_id>/', views.eliminar_producto, name="elim_producto"),
+    path('eliminarSC/<int:servicio_id>/', views.eliminar_servicio, name="elim_servicio"),
+    path('restar/<int:producto_id>/', views.restar_producto, name="restar_producto"),
+    path('limpiar/', views.limpiar_carrito, name="limpiar_carrito"),
+    path('carrito/', views.CarritoCompras, name='carrito'),
+
 ]

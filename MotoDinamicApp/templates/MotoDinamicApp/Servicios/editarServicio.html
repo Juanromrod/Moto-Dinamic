@@ -1,0 +1,57 @@
+{% extends 'MotoDinamicApp/base.html'%}
+
+{%load humanize%}
+{%load static%}
+
+{% block style%}
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Eliminar.css" %}'>
+{%endblock%}
+
+{% block content%}
+<div class="content">
+  <h1>Servicios </h1>
+  <div class="list">
+    {%for miServicio in servicios%}
+    <div>
+      <div class="card">
+      <div class="imageCard">
+        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+      </div>
+      <div class="infoCard">
+        <h2> {{miServicio.nombre}} <span>#{{miServicio.id}}</span></h2>
+        <p class="info"> Precio: ${{miServicio.precio | intcomma}} </p>
+        <p class="type"> {{miServicio.idTipoServicio.nombre}} </p>
+      </div>
+      </div>
+      <p class="editelim"><a class="editar" href="{% url 'editar_servicio' miServicio.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_servicio' miServicio.id %}">Eliminar</a></p>
+    </div>
+    {%endfor%}
+  </div>
+  <div class="searchDiv">
+    <form action="{% url 'modelim_servicio' %}" method="POST">
+      {% csrf_token %}
+      <span style="display: block;">Código</span>
+      <div class="searchinput">
+        <input type="text" name='servicioId' id="search">
+        <div class="lupa">
+          <button class="btn" type="submit">Buscar</button>
+        </div>
+      </div>
+      {%if servicio%}
+        <div style="margin-top: 30px;" class="card">
+          <div class="imageCard">
+          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+          </div>
+          <div class="infoCard">
+           <h2> {{servicio.nombre}} <span>#{{servicio.id}}</span></h2>
+           <p class="info"> Precio: ${{servicio.precio | intcomma}} </p>
+           <p class="type"> {{servicio.idTipoServicio.nombre}} </p>
+          </div>
+        </div>
+        <p class="editelim"><a class="editar" href="{% url 'editar_servicio' servicio.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_servicio' servicio.id %}">Eliminar</a></p>
+      {%endif%}
+    </form>
+  </div>
+</div>
+{%endblock%}
