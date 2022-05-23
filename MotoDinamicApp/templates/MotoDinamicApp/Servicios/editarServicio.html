@@ -16,7 +16,11 @@
     <div>
       <div class="card">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+        {% if miServicio.idTipoServicio.nombre == 'Limpieza'%}
+        <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+        {% else %}
+        <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+        {% endif %}
       </div>
       <div class="infoCard">
         <h2> {{miServicio.nombre}} <span>#{{miServicio.id}}</span></h2>
@@ -41,7 +45,11 @@
       {%if servicio%}
         <div style="margin-top: 30px;" class="card">
           <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+            {% if servicio.idTipoServicio.nombre == 'Limpieza'%}
+            <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+            {% else %}
+            <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+            {% endif %}
           </div>
           <div class="infoCard">
            <h2> {{servicio.nombre}} <span>#{{servicio.id}}</span></h2>

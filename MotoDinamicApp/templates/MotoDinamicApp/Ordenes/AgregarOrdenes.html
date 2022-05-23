@@ -1,0 +1,114 @@
+{%load humanize%}
+{%load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Moto Dinamic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Navbar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Agregar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
+  <script src='{% static "MotoDinamicApp/scripts/shoppingCart.js" %}'></script>
+  <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
+</head>
+
+<body>
+  <nav class="NavbarItems">
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'productos' %}" class="nav-links">
+          Productos & Servicios
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'clientes' %}" class="nav-links">
+          Clientes
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'motos' %}" class="nav-links">
+          Motos
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'facturacion_p' %}" class="nav-links">
+          Facturación
+        </a>
+      </li>
+    </ul>
+    <div>
+      <a href="/">
+        <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
+      </a>
+    </div>
+    <li class="signout">
+      <a id="signout" href="/SingIn" class="nav-links">
+    <li class="icon fas fa-sign-out-alt"></li>
+    SIGN OUT
+    </a>
+    </li>
+  </nav>
+  <div class="body" style="justify-content: space-evenly;">
+    <div class="cardcontent">
+      <h1 style="margin-top: 0px;">Buscar moto</h1>
+      <div class="searchDiv" style="margin-top: 0px; width: 450px;">
+        <form action="{% url 'insertar_orden' clienteid  total %}" method="POST">
+          {% csrf_token %}
+          <span>Número de placa</span>
+          <div class="searchinput">
+            <input type="text" name='motoId' id="search">
+            <button class="btn" style="margin-bottom: 15px;" type="submit">Buscar</button>
+          </div>
+          {%if moto%}
+          <div class="align">
+            <div style="margin-top: 30px;" class="card">
+              <div class="imageCard">
+                {% if moto.imagen %}
+                <img src="{{mMoto.imagen.url}}" alt="moto" />
+                {% else %}
+                <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+                {% endif %}
+              </div>
+              <div class="infoCard">
+                <h2> {{moto.placa}}</h2>
+                <p class="info"> Color: {{moto.color}} </p>
+                <p class="info"> Marca: {{moto.marca}} </p>
+                <p class="type"> {{moto.modelo}} </p>
+              </div>
+            </div>
+          </div>
+          {%endif%}
+        </form>
+      </div>
+      <h1 style="margin-top: 35px;">Agregar moto<i onClick="show()" style="cursor: pointer;"
+          class="add fas fa-solid fa-plus"></i></h1>
+      <div id="addC" class="lista-inputsC" style="visibility: hidden;">
+        <form action="{% url 'añadir_moto' clienteid  total %}" method="POST">
+          {% csrf_token %}
+          {{motoform}}
+          <div class="align">
+            <button class="btn" style="width: 300px; margin-left: 0px;" name="guardar" type="submit" class="button"> GUARDAR </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="cartnav" style="padding-bottom: 40px;">
+      <h3>Órden de ingreso</h3>
+      {%if moto%}
+      <div class="lista-inputsC" style="box-shadow: none; margin-left: 0px; width: auto; padding: 0px 70px 25px 70px;">
+        <form action="{% url 'completar_orden' moto.placa clienteid  total %}" method="POST">
+          {% csrf_token %}
+          {{orderform}}
+      </div>
+      <div class="align"><button class="btn2" type="submit" class="button"> INGRESAR </button></div>
+      </form>
+      {%else%}
+      <h3 style="font-size: 3rem;">Seleccione la moto</h3>
+      {%endif%}
+    </div>
+  </div>
+</body>
+
+</html>

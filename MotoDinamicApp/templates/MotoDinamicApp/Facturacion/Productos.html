@@ -40,24 +40,33 @@
 
 {% block content%}
 <div class="content">
-  <a class="cart" href="{% url 'carrito' %}"><i class="fas fa-solid fa-cart-plus"></i><div><span id="card">{{total_items}}</span></div>
+  <a class="cart" href="{% url 'carrito' %}"><i class="fas fa-solid fa-cart-plus"></i>
+    <div><span id="card">{{total_items}}</span></div>
   </a>
   <h1>Productos</h1>
   <div class="list">
     {%for myProduct in products%}
     <div>
-    <div class="card">
-      <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+      <div class="card">
+        <div class="imageCard">
+          {% if myProduct.imagen %}
+          <img src="{{myProduct.imagen.url}}" alt="producto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+          {% endif %}
+        </div>
+        <div class="infoCard">
+          <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
+          <p class="info"> Unidades: {{myProduct.stock}} </p>
+          <p class="info"> Precio: ${{myProduct.precio | intcomma}} </p>
+          <p class="type"> {{myProduct.idTipoProducto.nombre}} </p>
+        </div>
+        {% if myProduct.stock == 0 %}
+        <h4 style="display: flex;">Out of stock</h4>
+        {% else %}
+        <a href="{% url 'añadir_producto' myProduct.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
+        {% endif %}
       </div>
-      <div class="infoCard">
-        <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
-        <p class="info"> Unidades: {{myProduct.stock}} </p>
-        <p class="info"> Precio: ${{myProduct.precio | intcomma}} </p>
-        <p class="type"> {{myProduct.idTipoProducto.nombre}} </p>
-      </div>
-      <a href="{% url 'añadir_producto' myProduct.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
-    </div>
     </div>
     {%endfor%}
   </div>
@@ -72,18 +81,22 @@
         </div>
       </div>
       {%if product%}
-        <div style="margin-top: 30px;" class="card">
-          <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
-          </div>
-          <div class="infoCard">
-           <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
-           <p class="info"> Unidades: {{product.stock}} </p>
-           <p class="info"> Precio: ${{product.precio | intcomma}} </p>
-           <p class="type"> {{product.idTipoProducto.nombre}} </p>
-          </div>
-          <a href="{% url 'añadir_producto' product.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
+      <div style="margin-top: 30px;" class="card">
+        <div class="imageCard">
+          {% if product.imagen %}
+          <img src="{{myProduct.imagen.url}}" alt="producto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+          {% endif %}
         </div>
+        <div class="infoCard">
+          <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
+          <p class="info"> Unidades: {{product.stock}} </p>
+          <p class="info"> Precio: ${{product.precio | intcomma}} </p>
+          <p class="type"> {{product.idTipoProducto.nombre}} </p>
+        </div>
+        <a href="{% url 'añadir_producto' product.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
+      </div>
       {%endif%}
     </form>
   </div>

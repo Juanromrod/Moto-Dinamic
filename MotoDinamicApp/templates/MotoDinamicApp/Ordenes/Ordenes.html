@@ -3,18 +3,12 @@
 {%load static%}
 
 {% block latnav %}
-<h3>Motos</h3>
+<h3>Órdenes de ingreso</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="{% url 'motos' %}">
-    <li class="nav">
-      <i class="nav-icon fas fa-solid fa-plus"></i>
-      Motos
-    </li>
-  </a>
-  <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
+  <a class="nav-links-lat" href="{% url 'ordenes' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Editar Motos
+      Ver órdenes
     </li>
   </a>
 </div>
@@ -26,55 +20,53 @@
 
 {% block content %}
 <div class="content">
-  <h1>Motos <a style="margin-left: 15px;" href="{% url 'insertar_moto' %}"><i class="add fas fa-solid fa-plus"></i></a></h1>
+  <h1>Órdenes de ingreso</h1>
   <div class="list">
-    {%for miMoto in motos%}
+    {%for miOrden in ordenes%}
     <div>
       <div class="card">
         <div class="imageCard">
-          {% if miMoto.imagen %}
+          {% if miOrden.idMoto.imagen %}
           <img src="{{miMoto.imagen.url}}" alt="moto" />
           {% else %}
           <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
           {% endif %}
         </div>
         <div class="infoCard">
-          <h2> {{miMoto.placa}}</h2>
-          <p class="info"> Color: {{miMoto.color}} </p>
-          <p class="info"> Marca: {{miMoto.marca}} </p>
-          <p class="type">  {{miMoto.modelo}} </p>
+          <h2> {{miOrden.idMoto.placa}}<span>#{{miOrden.id}}</span></h2>
+          <p class="info"> Fecha: {{miOrden.fecha_ingreso }} </p>
+          <p class="info"> Servicio: {{o_s.idServicio.nombre}} </p>
         </div>
       </div>
-      {% block editelim %}
-      {% endblock %}
     </div>
     {%endfor%}
   </div>
   <div class="searchDiv">
-    <form action="{% url 'motos' %}" method="POST">
+    <form action="{% url 'ordenes' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Número de placa</span>
       <div class="searchinput">
-        <input type="text" name='motoId' id="search">
+        <input type="text" name='ordenId' id="search">
         <div class="lupa">
           <button class="btn" type="submit">Buscar</button>
         </div>
       </div>
-      {%if moto%}
+      {%for orden in misOrdenes%}
       <div style="margin-top: 30px;" class="card">
         <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/motos.png" %}' alt="producto" />
+          {% if orden.idMoto.imagen %}
+          <img src="{{miMoto.imagen.url}}" alt="moto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+          {% endif %}
         </div>
         <div class="infoCard">
-          <h2> {{moto.placa}}</h2>
-          <p class="info"> Color: {{moto.color}} </p>
-          <p class="info"> Marca: {{moto.marca}} </p>
-          <p class="type">  {{moto.modelo}} </p>
+          <h2> {{orden.idMoto.placa}}<span>#{{orden.id}}</span></h2>
+          <p class="info"> Fecha: {{orden.fecha_ingreso }} </p>
+          <p class="info"> Servicio: {{o_s.idServicio.nombre}} </p>
         </div>
       </div>
-      {% block editelim2 %}
-      {% endblock %}
-      {%endif%}
+      {%endfor%}
     </form>
   </div>
 </div>

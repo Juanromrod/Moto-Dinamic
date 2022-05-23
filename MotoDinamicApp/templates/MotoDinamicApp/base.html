@@ -42,6 +42,11 @@
                     <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
                 </a>
             </div>
+            <li>
+              <a href="{% url 'ordenes' %}" class="nav-links">
+                Órdenes de ingreso
+              </a>
+            </li>
             <li class="signout">
                 <a id="signout" href="/SingIn" class="nav-links">
                   <li class="icon fas fa-sign-out-alt"></li>
@@ -54,28 +59,40 @@
             {%block latnav%}
             <h3>Productos & Servicios</h3>
             <div class="navbarlat">
-              <a class="nav-links-lat" href="{% url 'productos' %}">
+              <a class="nav-links-lat" href="{% url 'insertar_producto' %}">
                 <li class="nav">
                     <i class="nav-icon fas fa-solid fa-plus"></i>
+                    Agregar productos
+                </li>
+              </a>
+              <a class="nav-links-lat" href="{% url 'productos' %}">
+                <li class="nav">
+                    <i class="nav-icon fas fa-solid fa-book"></i>
                     Productos
                 </li>
               </a>
               <a class="nav-links-lat" href="{% url 'modelim_producto' %}">             
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-pen"></i>
-                  Editar productos
+                  Editar o eliminar productos
                 </li>
               </a>
-              <a class="nav-links-lat" href="{% url 'servicios' %}">           
+              <a class="nav-links-lat" href="{% url 'insertar_servicio' %}">           
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-plus"></i>
-                  Servicios
+                  Agregar servicios
+                </li>
+              </a>
+              <a class="nav-links-lat" href="{% url 'servicios' %}">
+                <li class="nav">
+                    <i class="nav-icon fas fa-solid fa-book"></i>
+                    Servicios
                 </li>
               </a>
               <a class="nav-links-lat" href="{% url 'modelim_servicio' %}">          
                 <li class="nav">
                   <i class="nav-icon fas fa-solid fa-pen"></i>
-                  Editar servicios
+                  Editar o eliminar servicios
                 </li>
               </a>
             </div>
