@@ -416,7 +416,7 @@ def insertarFactura(request, cliente_id, eltotal):
         for ids in idservicios:
             servicio = Servicio.objects.get(id = ids)
             Factura_Servicio.objects.create(idservicio = servicio, idFactura = miFactura)
-        return redirect('facturasx')
+        return redirect('facturas')
 
 def ordenes(request):
     o_s = OrdenDeIngreso_Servicio.objects.all()
@@ -459,7 +459,7 @@ def insertarOrden(request, miplaca, cliente_id, eltotal):
         for ids in idservicios:
             servicio = Servicio.objects.get(id = ids)
             Factura_Servicio.objects.create(idServicio = servicio, idFactura = miFactura)
-        return HttpResponse('GET')
+        return redirect('ordenes')
 
 def buscarMoto(request, cliente_id, eltotal):
     orderform = inputOrden()

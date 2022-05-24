@@ -33,22 +33,34 @@
         </a>
       </li>
       <li>
-        <a href="{% url 'facturacion_p' %}" class="nav-links">
-          Facturación
+        <a href="{% url 'ordenes' %}" class="nav-links">
+          Órdenes de ingreso
         </a>
       </li>
     </ul>
     <div>
-      <a href="/">
+      <a href="{% url 'productos' %}">
         <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
       </a>
     </div>
-    <li class="signout">
-      <a id="signout" href="/SingIn" class="nav-links">
-    <li class="icon fas fa-sign-out-alt"></li>
-    SIGN OUT
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'facturacion_p' %}" class="nav-links">
+          Facturación
+        </a>
+      </li>
+      <li>
+        {% if user.is_superuser %}
+        <a href="{% url 'registrar_usuario'%}" class="nav-links">
+          Usuarios
+        </a>
+        {% endif %}
+      </li>
+    </ul>
+      <a id="signout" href="{% url 'productos'%}" class="nav-links">
+    <li class="icono fas fa-sign-out-alt"></li>
+    SALIR
     </a>
-    </li>
   </nav>
   <div class="body" style="justify-content: space-evenly;">
     <div class="cardcontent">
