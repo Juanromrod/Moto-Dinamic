@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-from contextlib import redirect_stderr
-from ctypes.wintypes import HLOCAL
-from http import client
-from itertools import product
-=======
 from genericpath import exists
->>>>>>> 24c14e1a5e90036247a5cf9f0c8e221e2cdb2a12
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .cart import Carrito
