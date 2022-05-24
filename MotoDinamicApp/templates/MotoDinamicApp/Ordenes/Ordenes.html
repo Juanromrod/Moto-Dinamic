@@ -1,0 +1,81 @@
+{% extends 'MotoDinamicApp/base.html'%}
+
+{%load static%}
+
+{% block latnav %}
+<h3>Órdenes de ingreso</h3>
+<div class="navbarlat">
+  <a class="nav-links-lat" href="{% url 'ordenes' %}">
+    <li class="nav">
+      <i class="nav-icon fas fa-solid fa-pen"></i>
+      Ver órdenes
+    </li>
+  </a>
+</div>
+{%endblock%}
+
+{% block style%}
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
+{%endblock%}
+
+{% block content %}
+<div class="content">
+  <h1>Órdenes de ingreso</h1>
+  <div class="list">
+    {%for miOrden in ordenes%}
+    <div>
+      <div class="card">
+        <div class="imageCard">
+          {% if miOrden.idMoto.imagen %}
+          <img src="{{miMoto.imagen.url}}" alt="moto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+          {% endif %}
+        </div>
+        <div class="infoCard">
+          <h2> {{miOrden.idMoto.placa}}<span>#{{miOrden.id}}</span></h2>
+          <p class="info"> Fecha: {{miOrden.fecha_ingreso }} </p>
+          {% for o in o_s %}
+          {% if o.idOrdenDeIngreso.id == miOrden.id %}
+          <p class="info"> Servicio: {{o.idServicio.nombre}} </p>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+  <div class="searchDiv">
+    <form action="{% url 'ordenes' %}" method="POST">
+      {% csrf_token %}
+      <span style="display: block;">Número de placa</span>
+      <div class="searchinput">
+        <input type="text" name='ordenId' id="search">
+        <div class="lupa">
+          <button class="btn" type="submit">Buscar</button>
+        </div>
+      </div>
+      {%for orden in misOrdenes%}
+      <div style="margin-top: 30px;" class="card">
+        <div class="imageCard">
+          {% if orden.idMoto.imagen %}
+          <img src="{{miMoto.imagen.url}}" alt="moto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+          {% endif %}
+        </div>
+        <div class="infoCard">
+          <h2> {{orden.idMoto.placa}}<span>#{{orden.id}}</span></h2>
+          <p class="info"> Fecha: {{orden.fecha_ingreso }} </p>
+          {% for o in o_s %}
+          {% if o.idOrdenDeIngreso.id == orden.id %}
+          <p class="info"> Servicio: {{o.idServicio.nombre}} </p>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {%endfor%}
+    </form>
+  </div>
+</div>
+{%endblock%}

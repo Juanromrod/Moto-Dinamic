@@ -34,16 +34,21 @@
     <div>
       <div class="card">
         <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/moto.jpg" %}' alt="producto" />
+          {% if miMoto.imagen %}
+          <img src="{{miMoto.imagen.url}}" alt="moto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+          {% endif %}
         </div>
         <div class="infoCard">
           <h2> {{miMoto.placa}}</h2>
           <p class="info"> Color: {{miMoto.color}} </p>
           <p class="info"> Marca: {{miMoto.marca}} </p>
-          <p class="type">  {{miMoto.modelo}} </p>
+          <p class="type"> {{miMoto.modelo}} </p>
         </div>
       </div>
-      <p class="editelim"><a class="editar" href="{% url 'editar_moto' miMoto.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_moto' miMoto.id %}">Eliminar</a></p>
+      <p class="editelim"><a class="editar" href="{% url 'editar_moto' miMoto.id %}">Editar</a><a class="eliminar"
+          href="{% url 'eliminar_moto' miMoto.id %}">Eliminar</a></p>
     </div>
     {%endfor%}
   </div>
@@ -57,19 +62,24 @@
           <button class="btn" type="submit">Buscar</button>
         </div>
       </div>
-      {%if cliente%}
-        <div style="margin-top: 30px;" class="card">
-          <div class="imageCard">
-            <img src='{% static "MotoDinamicApp/images/moto.jpg" %}' alt="producto" />
-          </div>
-          <div class="infoCard">
-            <h2> {{miMoto.placa}}</h2>
-            <p class="info"> Color: {{miMoto.color}} </p>
-            <p class="info"> Marca: {{miMoto.marca}} </p>
-            <p class="type">  {{miMoto.modelo}} </p>
-          </div>
+      {%if moto%}
+      <div style="margin-top: 30px;" class="card">
+        <div class="imageCard">
+          {% if moto.imagen %}
+          <img src="{{mMoto.imagen.url}}" alt="moto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+          {% endif %}
         </div>
-        <p class="editelim"><a class="editar" href="{% url 'editar_moto' miMoto.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_moto' miMoto.id %}">Eliminar</a></p>
+        <div class="infoCard">
+          <h2> {{miMoto.placa}}</h2>
+          <p class="info"> Color: {{miMoto.color}} </p>
+          <p class="info"> Marca: {{miMoto.marca}} </p>
+          <p class="type"> {{miMoto.modelo}} </p>
+        </div>
+      </div>
+      <p class="editelim"><a class="editar" href="{% url 'editar_moto' miMoto.id %}">Editar</a><a class="eliminar"
+          href="{% url 'eliminar_moto' miMoto.id %}">Eliminar</a></p>
       {%endif%}
     </form>
   </div>

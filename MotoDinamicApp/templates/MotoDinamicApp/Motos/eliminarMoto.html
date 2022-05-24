@@ -34,25 +34,31 @@
     <p>¿Seguro que desea eliminar esta moto?</p>
     <div class="card">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/moto.jpg" %}' alt="producto" />
+        {% if moto.imagen %}
+        <img src="{{moto.imagen.url}}" alt="moto" />
+        {% else %}
+        <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+        {% endif %}
       </div>
       <div class="infoCard">
-        <h2> {{miMoto.placa}}</h2>
-        <p class="info"> Color: {{miMoto.color}} </p>
-        <p class="info"> Marca: {{miMoto.marca}} </p>
-        <p class="type">  {{miMoto.modelo}} </p>
+        <h2> {{moto.placa}}</h2>
+        <p class="info"> Color: {{moto.color}} </p>
+        <p class="info"> Marca: {{moto.marca}} </p>
+        <p class="type"> {{moto.modelo}} </p>
       </div>
     </div>
     <form action="" method="POST">
-        {% csrf_token %}
-        <div class="botones">
-            <div class="boton">
-                <a href="{% url 'modelim_moto' %}"><div class="button" style="border: none;"> CANCELAR </div></a>
-            </div>
-            <div class="boton">
-                <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>
-            </div>
+      {% csrf_token %}
+      <div class="botones">
+        <div class="boton">
+          <a href="{% url 'modelim_moto' %}">
+            <div class="button" style="border: none;"> CANCELAR </div>
+          </a>
         </div>
+        <div class="boton">
+          <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

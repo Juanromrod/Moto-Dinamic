@@ -5,7 +5,16 @@
     background-color: rgb(243, 243, 243);
     width: 360px;
     height: 200px;
-    margin-left: 2%;
+    margin-top: 2%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px 0.1px rgb(70, 70, 70);
+}
+
+.cardf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(243, 243, 243);
     margin-top: 2%;
     border-radius: 20px;
     box-shadow: 0px 0px 5px 0.1px rgb(70, 70, 70);
@@ -17,7 +26,6 @@
     align-items: center;
     background-color: rgb(243, 243, 243);
     width: 290px;
-    margin-left: 50px;
     height: 150px;
     margin-top: 2%;
     border-radius: 20px;
@@ -27,7 +35,7 @@
 .imageCard {
     display: flex;
     height: 100%;
-    width: 45%;
+    width: 45%; 
 }
   
 .imageCard img {
@@ -35,6 +43,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 20px 0px 0px 20px;
+    background-color: #fff;
 }
   
 .infoCard {
@@ -77,38 +86,31 @@ h2 span {
   
 .searchinput {
    display: flex;
+   width: 130%;
 }
   
 .btn {
     display: inline;
-    font-weight: 300;
     background-color: #7db240;
     color: #F5F5F5;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding: 17.5px 15px 17.5px 15px;
     margin-top: 15px;
-    margin-left: 10px;
     border-radius: 6px;
     cursor: pointer;
     border-style: none;
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 .btn2 {
-    font-weight: 300;
     font-size: 1.8rem;
     background-color: #7db240;
     color: #F5F5F5;
-    padding-top: 20px;
-    padding-right: 15px;
-    padding-left: 15px;
-    padding-bottom: 20px;
-    margin-left: 130px;
-    margin-bottom: 100px;
+    padding: 20px 15px 20px 15px;
     border-radius: 6px;
     cursor: pointer;
     border-style: none;
+    font-weight: bold;
 }
 
 .sum {

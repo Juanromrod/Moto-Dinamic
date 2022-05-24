@@ -1,0 +1,139 @@
+{%load humanize%}
+{%load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Moto Dinamic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Navbar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Agregar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
+  <script src='{% static "MotoDinamicApp/scripts/shoppingCart.js" %}'></script>
+  <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
+</head>
+
+<body>
+  <nav class="NavbarItems">
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'productos' %}" class="nav-links">
+          Productos & Servicios
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'clientes' %}" class="nav-links">
+          Clientes
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'motos' %}" class="nav-links">
+          Motos
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'ordenes' %}" class="nav-links">
+          Órdenes de ingreso
+        </a>
+      </li>
+    </ul>
+    <div>
+      <a href="{% url 'productos' %}">
+        <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
+      </a>
+    </div>
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'facturacion_p' %}" class="nav-links">
+          Facturación
+        </a>
+      </li>
+      <li>
+        {% if user.is_superuser %}
+        <a href="{% url 'registrar_usuario'%}" class="nav-links">
+          Usuarios
+        </a>
+        {% endif %}
+      </li>
+    </ul>
+      <a id="signout" href="{% url 'productos'%}" class="nav-links">
+    <li class="icono fas fa-sign-out-alt"></li>
+    SALIR
+    </a>
+  </nav>
+  <div class="body">
+    <div class="latnav" style="max-height: 740px;">
+      <h3>Facturación</h3>
+      <div class="navbarlat">
+        <a class="nav-links-lat" href="{% url 'facturacion_p' %}">
+          <li class="nav">
+            <i class="nav-icon fas fa-solid fa-plus"></i>
+            Productos
+          </li>
+        </a>
+        <a class="nav-links-lat" href="{% url 'facturacion_s' %}">
+          <li class="nav">
+            <i class="nav-icon fas fa-solid fa-plus"></i>
+            Servicios
+          </li>
+        </a>
+        <a class="nav-links-lat" href="{% url 'facturas' %}">
+          <li class="nav">
+            <i class="nav-icon fas fa-solid fa-book"></i>
+            Consultar facturas
+          </li>
+        </a>
+      </div>
+    </div>
+    <div class="content">
+      <h1>Facturas</h1>
+      <div class="list">
+        {%for miFactura in facturas%}
+        {%for c in c_f%}
+        {% if c.idFactura.id == miFactura.id %}
+        <a style="text-decoration: none; color: black;" href="{% url 'ver_factura' miFactura.id%}">
+          <div class="card">
+            <div class="infoCard">
+              <h2> {{c.idCliente.nombre}} <span>#{{miFactura.id}}</span></h2>
+              <p class="info"> Fecha: {{miFactura.fecha}} </p>
+              <p class="type"> Total: ${{miFactura.total | intcomma}} </p>
+            </div>
+          </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="searchDiv">
+        <form action="{% url 'facturas' %}" method="POST">
+          {% csrf_token %}
+          <span style="display: block;">Código de factura o documento</span>
+          <div class="searchinput">
+            <input type="text" name='facturaId' id="search">
+            <div class="lupa">
+              <button class="btn" type="submit">Buscar</button>
+            </div>
+          </div>
+          {%if miFactura%}
+          {%for c in c_f%}
+          {% if c.idFactura.id == miFactura.id %}
+          <a style="text-decoration: none; color: black;" href="{% url 'ver_factura' miFactura.id%}">
+            <div class="card">
+              <div class="infoCard">
+                <h2> {{c.idCliente.nombre}} <span>#{{miFactura.id}}</span></h2>
+                <p class="info"> Fecha: {{miFactura.fecha}} </p>
+                <p class="type"> Total: ${{miFactura.total | intcomma}} </p>
+              </div>
+            </div>
+          </a>
+          {%endif%}
+          {%endfor%}
+          {%endif%}
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

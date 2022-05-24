@@ -33,30 +33,42 @@
         </a>
       </li>
       <li>
-        <a href="{% url 'facturacion_p' %}" class="nav-links">
-          Facturación
+        <a href="{% url 'ordenes' %}" class="nav-links">
+          Órdenes de ingreso
         </a>
       </li>
     </ul>
     <div>
-      <a href="/">
+      <a href="{% url 'productos' %}">
         <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
       </a>
     </div>
-    <li class="signout">
-      <a id="signout" href="/SingIn" class="nav-links">
-    <li class="icon fas fa-sign-out-alt"></li>
-    SIGN OUT
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'facturacion_p' %}" class="nav-links">
+          Facturación
+        </a>
+      </li>
+      <li>
+        {% if user.is_superuser %}
+        <a href="{% url 'registrar_usuario'%}" class="nav-links">
+          Usuarios
+        </a>
+        {% endif %}
+      </li>
+    </ul>
+      <a id="signout" href="{% url 'productos'%}" class="nav-links">
+    <li class="icono fas fa-sign-out-alt"></li>
+    SALIR
     </a>
-    </li>
   </nav>
-  <div class="body">
+  <div class="body" style="justify-content: space-evenly;">
     <div class="cardcontent">
-      <h1 style="margin-left: 150px; margin-top: 0px;">Buscar cliente</h1>
-      <div class="searchDiv" style="margin-left: 150px; margin-top: 0px; width: 450px;">
-        <form action="{% url 'carrito' %}" method="POST">
+      <h1 style="margin-top: 0px;">Buscar cliente</h1>
+      <div class="searchDiv" style="margin-top: 0px; width: 450px;">
+        <form action="{% url 'buscar_cliente' %}" method="POST">
           {% csrf_token %}
-          <span style="display: block; margin-left: 50px;">Número de cédula</span>
+          <span>Número de cédula</span>
           <div class="searchinput">
             <input type="text" name='clienteId' id="search">
             <div class="lupa">
@@ -64,26 +76,31 @@
             </div>
           </div>
           {%if cliente%}
-          <div style="margin-top: 30px; margin-left: 50px" class="card">
-            <div class="imageCard">
-              <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
-            </div>
-            <div class="infoCard">
-              <h2> {{cliente.nombre}}</h2>
-              <p class="info"> Documento: {{cliente.identificacion}} </p>
-              <p class="info"> Celular: {{cliente.celular}} </p>
-              <p class="type"> {{cliente.correo}} </p>
+          <div class="align">
+            <div style="margin-top: 30px;" class="card">
+              <div class="imageCard">
+                <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
+              </div>
+              <div class="infoCard">
+                <h2> {{cliente.nombre}}</h2>
+                <p class="info"> Documento: {{cliente.identificacion}} </p>
+                <p class="info"> Celular: {{cliente.celular}} </p>
+                <p class="type"> {{cliente.correo}} </p>
+              </div>
             </div>
           </div>
           {%endif%}
         </form>
       </div>
-      <h1 style="margin-left: 150px; margin-top: 35px;">Agregar cliente<i onClick="show()" style="cursor: pointer;" class="add fas fa-solid fa-plus"></i></h1>
-      <div id = "addC" class="lista-inputsC" style="visibility: hidden;">
-        <form action="" method="POST">
+      <h1 style="margin-top: 35px;">Agregar cliente<i onClick="show()" style="cursor: pointer;"
+          class="add fas fa-solid fa-plus"></i></h1>
+      <div id="addC" class="lista-inputsC" style="visibility: hidden;">
+        <form action="{% url 'añadir_cliente' %}" method="POST">
           {% csrf_token %}
-          {{form}}
-          <button class="btn" style="margin-left: 50px; width: 300px;" name="guardar" type="submit" class="button"> GUARDAR </button>
+          {{clienteform}}
+          <div class="align">
+            <button class="btn" style="width: 300px; margin-left: 0px" name="guardar" type="submit" class="button"> GUARDAR </button>
+          </div>
         </form>
       </div>
     </div>
@@ -96,37 +113,64 @@
         <div class="divisor">
           <div class="cardcart">
             <div class="imageCard">
-             <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+              {% if value.imagen %}
+              <img src="{{value.imagen}}" alt="producto" />
+              {% else %}
+              <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+              {% endif %}
             </div>
             <div class="infoCard">
-            <h2> {{value.nombre}} <span>#{{value.producto_id}}</span></h2>
-            <p class="info"> Cantidad: {{value.cantidad}} <a style="text-decoration: none;" href="{% url 'aumentar_producto' value.producto_id %}" class="sum btn-dark badge-dark">+</a><a style="text-decoration: none;" href="{% url 'restar_producto' value.producto_id %}" class="sub btn-dark badge-dark">-</a></p>
-            <p class="type"> Precio: ${{value.acumulado | intcomma}} </p>
+              <h2> {{value.nombre}} <span>#{{value.producto_id}}</span></h2>
+              <p class="info"> Cantidad: {{value.cantidad}} <a style="text-decoration: none;"
+                  href="{% url 'aumentar_producto' value.producto_id %}" class="sum btn-dark badge-dark">+</a><a
+                  style="text-decoration: none;" href="{% url 'restar_producto' value.producto_id %}"
+                  class="sub btn-dark badge-dark">-</a></p>
+              <p class="type"> Precio: ${{value.acumulado | intcomma}} </p>
             </div>
           </div>
-          <a href="{% url 'elim_producto' value.producto_id %}" style="text-decoration: none;"><i class="ticon fas fa-solid fa-trash"></i></a>
+          <a href="{% url 'elim_producto' value.producto_id %}" style="text-decoration: none;"><i
+              class="ticon fas fa-solid fa-trash"></i></a>
         </div>
         {% endif %}
         {% if value.servicio_id %}
         <div class="divisor">
           <div class="cardcart">
             <div class="imageCard">
-              <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+              {% if value.tipo == 'Limpieza'%}
+              <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+              {% else %}
+              <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+              {% endif %}
             </div>
             <div class="infoCard">
               <h2> {{value.nombre}} <span>#{{value.servicio_id}}</span></h2>
               <p class="type"> Precio: ${{value.acumulado | intcomma}} </p>
             </div>
           </div>
-          <a href="{% url 'elim_servicio' value.servicio_id %}" style="text-decoration: none;"><i class="ticon fas fa-solid fa-trash"></i></a>
+          <a href="{% url 'elim_servicio' value.servicio_id %}" style="text-decoration: none;"><i
+              class="ticon fas fa-solid fa-trash"></i></a>
         </div>
         {% endif %}
         {% endfor %}
+        {% else %}
+        <h3 style="font-size: 2.5rem;">El carrito está vacio</h3>
+        <div class="align"><a href="{% url 'facturacion_p' %}"><button class="btn2" type="submit" class="button"> PRODUCTOS </button></a></div>
         {% endif %}
       </div>
-      <h1 style="margin-left: 120px;">Total: ${{total_carrito | intcomma}}</h1>
-      <button class="btn2" type="submit" class="button"> FACTURAR </button>
+      {% if request.session.carrito.items %}
+      <h1 style="justify-content: center;">Total: ${{total_carrito | intcomma}}</h1>
+      {% if cliente %}
+      {% if service == True %}
+      <div class="align"><a href="{% url 'insertar_orden' cliente.id total_carrito%}"><button class="btn2" type="submit" class="button"> FACTURAR </button></a></div>
+      {% else %}
+      <div class="align"><a href="{% url 'completar_factura' cliente.id total_carrito %}"><button class="btn2" type="submit" class="button"> FACTURAR </button></a></div>
+      {% endif %}
+      {% else %}
+      <div class="align"><h3 style="padding: 0px;">Seleccione al cliente para continuar</h3></div>
+      {% endif %}
+      {% endif %}
     </div>
   </div>
 </body>
+
 </html>

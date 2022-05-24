@@ -1,5 +1,5 @@
+from xml.dom.minidom import Document
 from django.urls import path
-
 from . import views
 
 urlpatterns = [
@@ -36,5 +36,13 @@ urlpatterns = [
     path('restar/<int:producto_id>/', views.restar_producto, name="restar_producto"),
     path('limpiar/', views.limpiar_carrito, name="limpiar_carrito"),
     path('carrito/', views.CarritoCompras, name='carrito'),
-
+    path('ordenes/', views.ordenes, name='ordenes'),
+    path('crearorden/<str:cliente_id>/<int:eltotal>/', views.buscarMoto, name='insertar_orden'),
+    path('completarorden/<str:miplaca>/<str:cliente_id>/<int:eltotal>/', views.insertarOrden, name='completar_orden'),
+    path('añadirmoto/<str:cliente_id>/<int:eltotal>/', views.crearMoto, name='añadir_moto'),
+    path('buscarcliente/', views.buscarCliente, name='buscar_cliente'),
+    path('añadircliente/', views.crearCliente, name='añadir_cliente'),
+    path('completarfactura/<str:cliente_id>/<int:eltotal>/', views.insertarFactura, name='completar_factura'),
+    path('facturas/', views.facturas, name='facturas'),
+    path('verfactura/<str:miFactura>/', views.verFactura, name='ver_factura'),
 ]

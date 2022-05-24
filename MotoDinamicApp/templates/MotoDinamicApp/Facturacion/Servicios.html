@@ -23,16 +23,10 @@
       Servicios
     </li>
   </a>
-  <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
+  <a class="nav-links-lat" href="{% url 'facturas' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
       Consultar facturas
-    </li>
-  </a>
-  <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
-    <li class="nav">
-      <i class="nav-icon fas fa-solid fa-pen"></i>
-      Facturas de hoy
     </li>
   </a>
 </div>
@@ -48,7 +42,11 @@
     <div>
     <div class="card">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+        {% if miServicio.idTipoServicio.nombre == 'Limpieza'%}
+        <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+        {% else %}
+        <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+        {% endif %}
       </div>
       <div class="infoCard">
         <h2> {{miServicio.nombre}} <span>#{{miServicio.id}}</span></h2>
@@ -73,7 +71,11 @@
       {%if servicio%}
         <div style="margin-top: 30px;" class="card">
           <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+            {% if miServicio.idTipoServicio.nombre == 'Limpieza'%}
+            <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+            {% else %}
+            <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+            {% endif %}
           </div>
           <div class="infoCard">
            <h2> {{servicio.nombre}} <span>#{{servicio.id}}</span></h2>
