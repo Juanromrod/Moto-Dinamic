@@ -1,22 +1,11 @@
 from genericpath import exists
 from django.shortcuts import render, redirect
-from django.http import Http404, HttpResponse
+from django.http import HttpResponse
 from .cart import Carrito
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 from MotoDinamicApp.models import Ciudad, Cliente, Cliente_Factura, Factura, Factura_Producto, Factura_Servicio, OrdenDeIngreso_Servicio, Producto, Servicio, TipoProducto, Moto, OrdenDeIngreso, TipoServicio
 from .forms import inputCliente, inputProducto, inputServicio, inputTipoProducto, inputTipoServicio, inputMoto, inputOrden
-
-class Command(BaseCommand):
-
-    def handle(self, *args, **options):
-
-        # The magic line
-        User.objects.create_superuser(username= 'admin',
-                                email='motodinamic@gmail.com',
-                                password='motodinamic',
-                                is_staff=True,
-                                is_active=True,
-                                is_superuser=True)
 
 # Create your views here.
 @login_required(login_url='/')
