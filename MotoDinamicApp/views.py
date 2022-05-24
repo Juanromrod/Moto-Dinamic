@@ -1,12 +1,6 @@
-from asyncio.windows_events import NULL
-from contextlib import redirect_stderr
-from ctypes.wintypes import HLOCAL
-from http import client, server
-from itertools import product
+from genericpath import exists
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-
-from MotoDinamicApp.context_processor import total_carrito
+from django.http import Http404, HttpResponse
 from .cart import Carrito
 from datetime import datetime
 from MotoDinamicApp.models import Ciudad, Cliente, Cliente_Factura, Factura, Factura_Producto, Factura_Servicio, OrdenDeIngreso_Servicio, Producto, Servicio, TipoProducto, Moto, OrdenDeIngreso, TipoServicio
@@ -351,47 +345,22 @@ def crearCliente(request):
         return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente, 'clienteform': clienteform})
 
 def facturas(request):
+    c_f = Cliente_Factura.objects.all()
     facturas = Factura.objects.all()
     if request.method == "GET":
-        return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'facturas': facturas})
-    """if request.method == 'POST':
-        myId = request.POST['ordenId']
-        miMoto = Moto.objects.get(placa = myId)
-        misOrdenes = OrdenDeIngreso.objects.filter(idMoto = miMoto.id)
-        return render(request, 'MotoDinamicApp/Ordenes/Ordenes.html', {'misOrdenes': misOrdenes , 'ordenes': ordenes})"""
+        return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'facturas': facturas, 'c_f': c_f})
+    if request.method == 'POST':
+        myId = request.POST['facturaId']
+        miFactura = Factura.objects.get(id = myId)
+        return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'miFactura': miFactura, 'facturas': facturas, 'c_f': c_f})
 
-def selogro(request):
-    fac = Factura.objects.all()
-    c_f = Cliente_Factura.objects.all()
-    f_p = Factura_Producto.objects.all()
-    for f in fac:
-        print('Factura:')
-        print(str(f.fecha)+' '+str(f.iva)+' '+str(f.total))
-    for c in c_f:
-        print('Factura-Cliente:')
-        print(str(c.idCliente.nombre)+' '+str(c.idFactura.id))
-    for p in f_p:
-        print('Factura-Producto:')
-        print(str(p.idFactura.id)+' '+str(p.idProducto.nombre)+' '+str(p.cantidad))
-    return HttpResponse('Se logró??')
-
-def eliminarF():
-    fac = Factura.objects.all()
-    c_f = Cliente_Factura.objects.all()
-    f_p = Factura_Producto.objects.all()
-    for f in fac:
-        f.delete()
-        print('Factura:')
-        print(str(f.fecha)+' '+str(f.iva)+' '+str(f.total))
-    for c in c_f:
-        c.delete()
-        print('Factura-Cliente:')
-        print(str(c.idCliente.nombre)+' '+str(c.idFactura.id))
-    for p in f_p:
-        p.delete()
-        print('Factura-Producto:')
-        print(str(p.idFactura.id)+' '+str(p.idProducto.nombre)+' '+str(p.cantidad))
-    return HttpResponse('Se logró??')
+def verFactura(request, miFactura):
+    c_f = Cliente_Factura.objects.get(idFactura = miFactura)
+    f_p = Factura_Producto.objects.filter(idFactura = miFactura)
+    f_s = Factura_Servicio.objects.filter(idFactura = miFactura)
+    miFactura = Factura.objects.get(id = miFactura)
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Facturacion/VerFactura.html', {'miFactura': miFactura, 'c_f': c_f, 'f_p': f_p, 'f_s': f_s})
 
 def insertarFactura(request, cliente_id, eltotal):
     cliente = Cliente.objects.get(id = cliente_id)
@@ -415,7 +384,7 @@ def insertarFactura(request, cliente_id, eltotal):
         for ids in idservicios:
             servicio = Servicio.objects.get(id = ids)
             Factura_Servicio.objects.create(idservicio = servicio, idFactura = miFactura)
-        return HttpResponse('GET')
+        return redirect('facturasx')
 
 def ordenes(request):
     o_s = OrdenDeIngreso_Servicio.objects.all()

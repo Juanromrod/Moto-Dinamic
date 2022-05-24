@@ -35,7 +35,11 @@
         <div class="infoCard">
           <h2> {{miOrden.idMoto.placa}}<span>#{{miOrden.id}}</span></h2>
           <p class="info"> Fecha: {{miOrden.fecha_ingreso }} </p>
-          <p class="info"> Servicio: {{o_s.idServicio.nombre}} </p>
+          {% for o in o_s %}
+          {% if o.idOrdenDeIngreso.id == miOrden.id %}
+          <p class="info"> Servicio: {{o.idServicio.nombre}} </p>
+          {% endif %}
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -63,7 +67,11 @@
         <div class="infoCard">
           <h2> {{orden.idMoto.placa}}<span>#{{orden.id}}</span></h2>
           <p class="info"> Fecha: {{orden.fecha_ingreso }} </p>
-          <p class="info"> Servicio: {{o_s.idServicio.nombre}} </p>
+          {% for o in o_s %}
+          {% if o.idOrdenDeIngreso.id == orden.id %}
+          <p class="info"> Servicio: {{o.idServicio.nombre}} </p>
+          {% endif %}
+          {% endfor %}
         </div>
       </div>
       {%endfor%}

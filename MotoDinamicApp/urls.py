@@ -43,5 +43,6 @@ urlpatterns = [
     path('buscarcliente/', views.buscarCliente, name='buscar_cliente'),
     path('añadircliente/', views.crearCliente, name='añadir_cliente'),
     path('completarfactura/<str:cliente_id>/<int:eltotal>/', views.insertarFactura, name='completar_factura'),
-    path('win/', views.selogro, name='win'),
+    path('facturas/', views.facturas, name='facturas'),
+    path('verfactura/<str:miFactura>/', views.verFactura, name='ver_factura'),
 ]

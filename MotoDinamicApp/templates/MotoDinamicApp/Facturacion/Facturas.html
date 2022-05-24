@@ -33,20 +33,34 @@
         </a>
       </li>
       <li>
-        <a href="{% url 'facturacion_p' %}" class="nav-links">
-          Facturación
+        <a href="{% url 'ordenes' %}" class="nav-links">
+          Órdenes de ingreso
         </a>
       </li>
     </ul>
     <div>
-      <a href="/">
+      <a href="{% url 'productos' %}">
         <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
       </a>
     </div>
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'facturacion_p' %}" class="nav-links">
+          Facturación
+        </a>
+      </li>
+      <li>
+        {% if user.is_superuser %}
+        <a href="{% url 'registrar_usuario'%}" class="nav-links">
+          Usuarios
+        </a>
+        {% endif %}
+      </li>
+    </ul>
     <li class="signout">
-      <a id="signout" href="/SingIn" class="nav-links">
-    <li class="icon fas fa-sign-out-alt"></li>
-    SIGN OUT
+      <a id="signout" href="{% url 'productos'%}" class="nav-links">
+    <li class="icono fas fa-sign-out-alt"></li>
+    SALIR
     </a>
     </li>
   </nav>
@@ -66,33 +80,60 @@
             Servicios
           </li>
         </a>
-        <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
+        <a class="nav-links-lat" href="{% url 'facturas' %}">
           <li class="nav">
             <i class="nav-icon fas fa-solid fa-book"></i>
             Consultar facturas
           </li>
         </a>
-        <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
-          <li class="nav">
-            <i class="nav-icon fas fa-solid fa-book"></i>
-            Facturas de hoy
-          </li>
-        </a>
       </div>
     </div>
-    <div class="cartnav" style="padding-bottom: 40px;">
-      <h3>Facturación</h3>
-      {%if cliente%}
-      <div class="lista-inputsC" style="box-shadow: none; margin-left: 0px; width: auto; padding: 0px 70px 25px 70px;">
-        <form action="{% url 'completar_orden' moto.placa %}" method="POST">
-          {% csrf_token %}
-          {{orderform}}
+    <div class="content">
+      <h1>Facturas</h1>
+      <div class="list">
+        {%for miFactura in facturas%}
+        {%for c in c_f%}
+        {% if c.idFactura.id == miFactura.id %}
+        <a style="text-decoration: none; color: black;" href="{% url 'ver_factura' miFactura.id%}">
+          <div class="card">
+            <div class="infoCard">
+              <h2> {{c.idCliente.nombre}} <span>#{{miFactura.id}}</span></h2>
+              <p class="info"> Fecha: {{miFactura.fecha}} </p>
+              <p class="type"> Total: ${{miFactura.total | intcomma}} </p>
+            </div>
+          </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
       </div>
-      <div class="align"><button class="btn2" type="submit" class="button"> INGRESAR </button></div>
-      </form>
-      {%else%}
-      <h3 style="font-size: 3rem;">Seleccione la moto</h3>
-      {%endif%}
+      <div class="searchDiv">
+        <form action="{% url 'facturas' %}" method="POST">
+          {% csrf_token %}
+          <span style="display: block;">Código de factura o documento</span>
+          <div class="searchinput">
+            <input type="text" name='facturaId' id="search">
+            <div class="lupa">
+              <button class="btn" type="submit">Buscar</button>
+            </div>
+          </div>
+          {%if miFactura%}
+          {%for c in c_f%}
+          {% if c.idFactura.id == miFactura.id %}
+          <a style="text-decoration: none; color: black;" href="{% url 'ver_factura' miFactura.id%}">
+            <div class="card">
+              <div class="infoCard">
+                <h2> {{c.idCliente.nombre}} <span>#{{miFactura.id}}</span></h2>
+                <p class="info"> Fecha: {{miFactura.fecha}} </p>
+                <p class="type"> Total: ${{miFactura.total | intcomma}} </p>
+              </div>
+            </div>
+          </a>
+          {%endif%}
+          {%endfor%}
+          {%endif%}
+        </form>
+      </div>
     </div>
   </div>
 </body>
