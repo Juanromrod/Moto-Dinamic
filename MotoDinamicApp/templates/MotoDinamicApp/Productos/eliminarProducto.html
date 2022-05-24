@@ -16,7 +16,11 @@
     <p>¿Seguro que desea eliminar el siguiente producto?</p>
     <div class="card">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+        {% if myProduct.imagen %}
+        <img src="{{myProduct.imagen.url}}" alt="producto" />
+        {% else %}
+        <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+        {% endif %}
       </div>
       <div class="infoCard">
         <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
@@ -26,15 +30,17 @@
       </div>
     </div>
     <form action="" method="POST">
-        {% csrf_token %}
-        <div class="botones">
-            <div class="boton">
-                <a href="{% url 'modelim_producto' %}"><div class="button" style="border: none;"> CANCELAR </div></a>
-            </div>
-            <div class="boton">
-                <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>
-            </div>
+      {% csrf_token %}
+      <div class="botones">
+        <div class="boton">
+          <a href="{% url 'modelim_producto' %}">
+            <div class="button" style="border: none;"> CANCELAR </div>
+          </a>
         </div>
+        <div class="boton">
+          <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

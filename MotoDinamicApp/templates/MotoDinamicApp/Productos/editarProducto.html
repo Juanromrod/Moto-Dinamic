@@ -15,17 +15,22 @@
     {%for myProduct in products%}
     <div>
       <div class="card">
-      <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+        <div class="imageCard">
+          {% if myProduct.imagen %}
+          <img src="{{myProduct.imagen.url}}" alt="producto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+          {% endif %}
+        </div>
+        <div class="infoCard">
+          <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
+          <p class="info"> Unidades: {{myProduct.stock}} </p>
+          <p class="info"> Precio: ${{myProduct.precio | intcomma}} </p>
+          <p class="type"> {{myProduct.idTipoProducto.nombre}} </p>
+        </div>
       </div>
-      <div class="infoCard">
-        <h2> {{myProduct.nombre}} <span>#{{myProduct.id}}</span></h2>
-        <p class="info"> Unidades: {{myProduct.stock}} </p>
-        <p class="info"> Precio: ${{myProduct.precio | intcomma}} </p>
-        <p class="type"> {{myProduct.idTipoProducto.nombre}} </p>
-      </div>
-      </div>
-      <p class="editelim"><a class="editar" href="{% url 'editar_producto' myProduct.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_producto' myProduct.id %}">Eliminar</a></p>
+      <p class="editelim"><a class="editar" href="{% url 'editar_producto' myProduct.id %}">Editar</a><a
+          class="eliminar" href="{% url 'eliminar_producto' myProduct.id %}">Eliminar</a></p>
     </div>
     {%endfor%}
   </div>
@@ -40,18 +45,23 @@
         </div>
       </div>
       {%if product%}
-        <div style="margin-top: 30px;" class="card">
-          <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
-          </div>
-          <div class="infoCard">
-           <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
-           <p class="info"> Unidades: {{product.stock}} </p>
-           <p class="info"> Precio: ${{product.precio | intcomma}} </p>
-           <p class="type"> {{product.idTipoProducto.nombre}} </p>
-          </div>
+      <div style="margin-top: 30px;" class="card">
+        <div class="imageCard">
+          {% if myProduct.imagen %}
+          <img src="{{myProduct.imagen.url}}" alt="producto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+          {% endif %}
         </div>
-        <p class="editelim"><a class="editar" href="{% url 'editar_producto' product.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_producto' product.id %}">Eliminar</a></p>
+        <div class="infoCard">
+          <h2> {{product.nombre}} <span>#{{product.id}}</span></h2>
+          <p class="info"> Unidades: {{product.stock}} </p>
+          <p class="info"> Precio: ${{product.precio | intcomma}} </p>
+          <p class="type"> {{product.idTipoProducto.nombre}} </p>
+        </div>
+      </div>
+      <p class="editelim"><a class="editar" href="{% url 'editar_producto' product.id %}">Editar</a><a class="eliminar"
+          href="{% url 'eliminar_producto' product.id %}">Eliminar</a></p>
       {%endif%}
     </form>
   </div>

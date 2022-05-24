@@ -1,16 +1,10 @@
-from asyncio.windows_events import NULL
-from contextlib import redirect_stderr
-from ctypes.wintypes import HLOCAL
-from http import client
-from itertools import product
+from genericpath import exists
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from .cart import Carrito
-from MotoDinamicApp.models import Ciudad, Cliente, Producto, Servicio, TipoProducto, Moto
-from .forms import inputCliente, inputProducto, inputServicio, inputTipoProducto, inputTipoServicio, inputMoto
-from django.contrib.auth.decorators import login_required
-"""from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from datetime import datetime
+from MotoDinamicApp.models import Ciudad, Cliente, Cliente_Factura, Factura, Factura_Producto, Factura_Servicio, OrdenDeIngreso_Servicio, Producto, Servicio, TipoProducto, Moto, OrdenDeIngreso, TipoServicio
+from .forms import inputCliente, inputProducto, inputServicio, inputTipoProducto, inputTipoServicio, inputMoto, inputOrden
 
 class Command(BaseCommand):
 
@@ -22,7 +16,7 @@ class Command(BaseCommand):
                                 password='motodinamic',
                                 is_staff=True,
                                 is_active=True,
-                                is_superuser=True)"""
+                                is_superuser=True)
 
 # Create your views here.
 @login_required(login_url='/')
@@ -71,11 +65,16 @@ def Productos(request):
 
 @login_required(login_url='/')
 def insertarProducto(request):
+    tipos = ['Accesorio', 'Repuesto']
+    if(len(TipoProducto.objects.all()) == 0):
+        for p in tipos:
+            tipo = TipoProducto.objects.create(nombre = p)
+            tipo.save()
     if request.method == 'GET':
         form = inputProducto()
         return render(request, 'MotoDinamicApp/Productos/AgregarProductos.html',{'form': form})
     elif request.method == 'POST':
-        myProducto = inputProducto(request.POST)
+        myProducto = inputProducto(request.POST, request.FILES)
         if myProducto.is_valid():
             myProducto.save()
         return redirect('insertar_producto')
@@ -97,7 +96,7 @@ def editarProducto(request, pk):
     if request.method == 'GET':
         return render(request, 'MotoDinamicApp/Productos/AgregarProductos.html', {'form': form})
     if request.method == 'POST':
-        myProducto = inputProducto(request.POST, instance=producto)
+        myProducto = inputProducto(request.POST, request.FILES, instance=producto)
         if myProducto.is_valid():
             myProducto.save()
         return redirect('editar_producto', pk)
@@ -125,6 +124,11 @@ def Servicios(request):
 
 @login_required(login_url='/')
 def insertarServicio(request):
+    tipos = ['Limpieza', 'Revisión', 'Arreglo']
+    if(len(TipoServicio.objects.all()) == 0):
+        for p in tipos:
+            tipo = TipoServicio.objects.create(nombre = p)
+            tipo.save()
     if request.method == 'GET':
         form = inputServicio()
         return render(request, 'MotoDinamicApp/Servicios/AgregarServicios.html',{'form': form})
@@ -170,11 +174,6 @@ def Clientes(request):
     carrito = Carrito(request)
     carrito.limpiar()
     clientes = Cliente.objects.all()
-    ciudades = ['Bogotá', 'Medellin', 'Cali', 'Barranquilla', 'Cartagena', 'Ibagué', 'Santa Marta', 'Manizales', 'Pereira', 'Neiva','Pasto', 'Armenia']
-    if(len(Ciudad.objects.all()) == 0):
-        for c in ciudades:
-            ciudad = Ciudad.objects.create(nombre = c)
-            ciudad.save()
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/Clientes/Clientes.html', {'clientes': clientes})
     if request.method == 'POST':
@@ -184,6 +183,11 @@ def Clientes(request):
 
 @login_required(login_url='/')
 def insertarCliente(request):
+    ciudades = ['Bogotá', 'Medellin', 'Cali', 'Barranquilla', 'Cartagena', 'Ibagué', 'Santa Marta', 'Manizales', 'Pereira', 'Neiva','Pasto', 'Armenia']
+    if(len(Ciudad.objects.all()) == 0):
+        for c in ciudades:
+            ciudad = Ciudad.objects.create(nombre = c)
+            ciudad.save()
     if request.method == 'GET':
         form = inputCliente()
         return render(request, 'MotoDinamicApp/Clientes/AgregarClientes.html',{'form': form})
@@ -242,7 +246,7 @@ def insertarMoto(request):
         form = inputMoto()
         return render(request, 'MotoDinamicApp/Motos/AgregarMotos.html',{'form': form})
     elif request.method == 'POST':
-        miMoto = inputMoto(request.POST)
+        miMoto = inputMoto(request.POST, request.FILES)
         if miMoto.is_valid():
             miMoto.save()
         return redirect('insertar_moto')
@@ -264,7 +268,7 @@ def editarMoto(request, pk):
     if request.method == 'GET':
         return render(request, 'MotoDinamicApp/Motos/AgregarMotos.html', {'form': form})
     if request.method == 'POST':
-        miMoto = inputMoto(request.POST, instance=moto)
+        miMoto = inputMoto(request.POST, request.FILES, instance=moto)
         if miMoto.is_valid():
             miMoto.save()
         return redirect('editar_moto', pk)
@@ -348,12 +352,146 @@ def limpiar_carrito(request):
 
 @login_required(login_url='/')
 def CarritoCompras(request):
-    form = inputCliente()
+    ciudades = ['Bogotá', 'Medellin', 'Cali', 'Barranquilla', 'Cartagena', 'Ibagué', 'Santa Marta', 'Manizales', 'Pereira', 'Neiva','Pasto', 'Armenia']
+    if(len(Ciudad.objects.all()) == 0):
+        for c in ciudades:
+            ciudad = Ciudad.objects.create(nombre = c)
+            ciudad.save()
+    clienteform = inputCliente()
     clientes = Cliente.objects.all()
-    carrito = Carrito(request)
     if request.method == 'GET':
-        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'form': form})
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'clienteform': clienteform})
     if request.method == 'POST':
         miId = request.POST['clienteId']
         miCliente = Cliente.objects.get(identificacion = miId)
-        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente , 'clientes': clientes, 'form': form})
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente , 'clientes': clientes, 'clienteform': clienteform})
+
+def buscarCliente(request):
+    clienteform = inputCliente()
+    if request.method == 'GET':
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html',{'clienteform': clienteform})
+    if request.method == 'POST':
+        miId = request.POST['clienteId']
+        miCliente = Cliente.objects.get(identificacion = miId)
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente,'clienteform': clienteform})
+
+def crearCliente(request):
+    clienteform = inputCliente()
+    if request.method == 'GET':
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html',{'clienteform': clienteform})
+    elif request.method == 'POST':
+        cliente = inputCliente(request.POST)
+        miId = request.POST['identificacion']
+        if(cliente.is_valid()):
+            cliente.save()
+            miCliente = Cliente.objects.get(identificacion = miId)
+        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente, 'clienteform': clienteform})
+
+def facturas(request):
+    c_f = Cliente_Factura.objects.all()
+    facturas = Factura.objects.all()
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'facturas': facturas, 'c_f': c_f})
+    if request.method == 'POST':
+        myId = request.POST['facturaId']
+        miFactura = Factura.objects.get(id = myId)
+        return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'miFactura': miFactura, 'facturas': facturas, 'c_f': c_f})
+
+def verFactura(request, miFactura):
+    c_f = Cliente_Factura.objects.get(idFactura = miFactura)
+    f_p = Factura_Producto.objects.filter(idFactura = miFactura)
+    f_s = Factura_Servicio.objects.filter(idFactura = miFactura)
+    miFactura = Factura.objects.get(id = miFactura)
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Facturacion/VerFactura.html', {'miFactura': miFactura, 'c_f': c_f, 'f_p': f_p, 'f_s': f_s})
+
+def insertarFactura(request, cliente_id, eltotal):
+    cliente = Cliente.objects.get(id = cliente_id)
+    carrito = Carrito(request)
+    iva = carrito.getIva()
+    if request.method == 'GET':
+        lafecha = datetime.today()
+        miFactura = Factura.objects.create(fecha = lafecha, iva = iva, total = eltotal)
+        cliente = Cliente.objects.get(id = cliente_id)
+        Cliente_Factura.objects.create(idCliente = cliente, idFactura = miFactura)
+        idservicios = carrito.getServicios()
+        idproductos = carrito.getProductos()
+        cantidad = carrito.getCantidad()
+        for idp in idproductos:
+            cont = 0
+            producto = Producto.objects.get(id = idp)
+            producto.stock -= cantidad[cont]
+            producto.save()
+            Factura_Producto.objects.create(idProducto = producto, cantidad = cantidad[cont], idFactura = miFactura)
+            cont += 1
+        for ids in idservicios:
+            servicio = Servicio.objects.get(id = ids)
+            Factura_Servicio.objects.create(idservicio = servicio, idFactura = miFactura)
+        return redirect('facturasx')
+
+def ordenes(request):
+    o_s = OrdenDeIngreso_Servicio.objects.all()
+    ordenes = OrdenDeIngreso.objects.all()
+    if request.method == "GET":
+        return render(request, 'MotoDinamicApp/Ordenes/Ordenes.html', {'ordenes': ordenes, 'o_s': o_s})
+    if request.method == 'POST':
+        myId = request.POST['ordenId']
+        miMoto = Moto.objects.get(placa = myId)
+        misOrdenes = OrdenDeIngreso.objects.filter(idMoto = miMoto.id)
+        return render(request, 'MotoDinamicApp/Ordenes/Ordenes.html', {'misOrdenes': misOrdenes , 'ordenes': ordenes, 'o_s': o_s})
+
+def insertarOrden(request, miplaca, cliente_id, eltotal):
+    cliente = Cliente.objects.get(id = cliente_id)
+    carrito = Carrito(request)
+    iva = carrito.getIva()
+    idservicios = carrito.getServicios()
+    idproductos = carrito.getProductos()
+    cantidad = carrito.getCantidad()
+    if request.method == 'POST':
+        fecha = request.POST['fecha_ingreso']
+        desc = request.POST['desc_problema']
+        info = request.POST['info_adicional']
+        miMoto = Moto.objects.get(placa = miplaca)
+        miOrden = OrdenDeIngreso.objects.create(idMoto = miMoto, desc_problema = desc, fecha_ingreso = fecha, info_adicional = info)
+        for ids in idservicios:
+            miServicio = Servicio.objects.get(id = ids)
+            OrdenDeIngreso_Servicio.objects.create(idOrdenDeIngreso = miOrden, idServicio = miServicio)
+        lafecha = datetime.today()
+        miFactura = Factura.objects.create(fecha = lafecha, iva = iva, total = eltotal)
+        cliente = Cliente.objects.get(id = cliente_id)
+        Cliente_Factura.objects.create(idCliente = cliente, idFactura = miFactura)
+        for idp in idproductos:
+            cont = 0
+            producto = Producto.objects.get(id = idp)
+            producto.stock -= cantidad[cont]
+            producto.save()
+            Factura_Producto.objects.create(idProducto = producto, cantidad = cantidad[cont], idFactura = miFactura)
+            cont += 1
+        for ids in idservicios:
+            servicio = Servicio.objects.get(id = ids)
+            Factura_Servicio.objects.create(idServicio = servicio, idFactura = miFactura)
+        return HttpResponse('GET')
+
+def buscarMoto(request, cliente_id, eltotal):
+    orderform = inputOrden()
+    motoform = inputMoto()
+    if request.method == 'GET':
+        return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'clienteid': cliente_id, 'total': eltotal})
+    elif request.method == 'POST':
+        miId = request.POST['motoId']
+        miMoto = Moto.objects.get(placa = miId)
+        return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
+
+
+def crearMoto(request, cliente_id, eltotal):
+    orderform = inputOrden()
+    motoform = inputMoto()
+    if request.method == 'GET':
+        return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'clienteid': cliente_id, 'total': eltotal})
+    elif request.method == 'POST':
+        moto = inputMoto(request.POST)
+        miplaca = request.POST['placa']
+        if(moto.is_valid()):
+            moto.save()
+            miMoto = Moto.objects.get(placa = miplaca)
+        return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
