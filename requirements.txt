@@ -1,2 +1,4 @@
 django == 4.0.3
 pillow
+djangorestframework
+psycopg2==2.8.4
