@@ -355,6 +355,7 @@ def CarritoCompras(request):
         miCliente = Cliente.objects.get(identificacion = miId)
         return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente , 'clientes': clientes, 'clienteform': clienteform})
 
+@login_required(login_url='/')
 def buscarCliente(request):
     clienteform = inputCliente()
     if request.method == 'GET':
@@ -364,6 +365,7 @@ def buscarCliente(request):
         miCliente = Cliente.objects.get(identificacion = miId)
         return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente,'clienteform': clienteform})
 
+@login_required(login_url='/')
 def crearCliente(request):
     clienteform = inputCliente()
     if request.method == 'GET':
@@ -376,6 +378,7 @@ def crearCliente(request):
             miCliente = Cliente.objects.get(identificacion = miId)
         return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente, 'clienteform': clienteform})
 
+@login_required(login_url='/')
 def facturas(request):
     c_f = Cliente_Factura.objects.all()
     facturas = Factura.objects.all()
@@ -386,6 +389,7 @@ def facturas(request):
         miFactura = Factura.objects.get(id = myId)
         return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'miFactura': miFactura, 'facturas': facturas, 'c_f': c_f})
 
+@login_required(login_url='/')
 def verFactura(request, miFactura):
     c_f = Cliente_Factura.objects.get(idFactura = miFactura)
     f_p = Factura_Producto.objects.filter(idFactura = miFactura)
@@ -394,6 +398,7 @@ def verFactura(request, miFactura):
     if request.method == "GET":
         return render(request, 'MotoDinamicApp/Facturacion/VerFactura.html', {'miFactura': miFactura, 'c_f': c_f, 'f_p': f_p, 'f_s': f_s})
 
+@login_required(login_url='/')
 def insertarFactura(request, cliente_id, eltotal):
     cliente = Cliente.objects.get(id = cliente_id)
     carrito = Carrito(request)
@@ -420,6 +425,7 @@ def insertarFactura(request, cliente_id, eltotal):
         carrito.limpiar()
         return redirect('facturas')
 
+@login_required(login_url='/')
 def ordenes(request):
     o_s = OrdenDeIngreso_Servicio.objects.all()
     ordenes = OrdenDeIngreso.objects.all()
@@ -431,6 +437,7 @@ def ordenes(request):
         misOrdenes = OrdenDeIngreso.objects.filter(idMoto = miMoto.id)
         return render(request, 'MotoDinamicApp/Ordenes/Ordenes.html', {'misOrdenes': misOrdenes , 'ordenes': ordenes, 'o_s': o_s})
 
+@login_required(login_url='/')
 def insertarOrden(request, miplaca, cliente_id, eltotal):
     cliente = Cliente.objects.get(id = cliente_id)
     carrito = Carrito(request)
@@ -465,6 +472,7 @@ def insertarOrden(request, miplaca, cliente_id, eltotal):
         carrito.limpiar()
         return redirect('ordenes')
 
+@login_required(login_url='/')
 def buscarMoto(request, cliente_id, eltotal):
     orderform = inputOrden()
     motoform = inputMoto()
@@ -475,7 +483,7 @@ def buscarMoto(request, cliente_id, eltotal):
         miMoto = Moto.objects.get(placa = miId)
         return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
 
-
+@login_required(login_url='/')
 def crearMoto(request, cliente_id, eltotal):
     orderform = inputOrden()
     motoform = inputMoto()

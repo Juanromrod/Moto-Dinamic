@@ -125,6 +125,7 @@ h3 {
 .align {
   display: flex;
   justify-content: center;
+  padding-bottom: 30px;
 }
 
 h1 {

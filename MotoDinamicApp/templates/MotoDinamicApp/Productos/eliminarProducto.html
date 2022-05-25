@@ -16,8 +16,8 @@
     <p>¿Seguro que desea eliminar el siguiente producto?</p>
     <div class="card">
       <div class="imageCard">
-        {% if myProduct.imagen %}
-        <img src="{{myProduct.imagen.url}}" alt="producto" />
+        {% if product.imagen %}
+        <img src="{{product.imagen.url}}" alt="producto" />
         {% else %}
         <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
         {% endif %}

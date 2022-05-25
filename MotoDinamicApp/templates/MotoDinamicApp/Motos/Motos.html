@@ -63,7 +63,11 @@
       {%if moto%}
       <div style="margin-top: 30px;" class="card">
         <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/motos.png" %}' alt="producto" />
+          {% if moto.imagen %}
+          <img src="{{moto.imagen.url}}" alt="moto" />
+          {% else %}
+          <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
+          {% endif %}
         </div>
         <div class="infoCard">
           <h2> {{moto.placa}}</h2>
