@@ -27,7 +27,7 @@
       <div class="card">
         <div class="imageCard">
           {% if miOrden.idMoto.imagen %}
-          <img src="{{miMoto.imagen.url}}" alt="moto" />
+          <img src="{{miOrden.idMoto.imagen.url}}" alt="moto" />
           {% else %}
           <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
           {% endif %}
@@ -59,7 +59,7 @@
       <div style="margin-top: 30px;" class="card">
         <div class="imageCard">
           {% if orden.idMoto.imagen %}
-          <img src="{{miMoto.imagen.url}}" alt="moto" />
+          <img src="{{orden.idMoto.imagen.url}}" alt="moto" />
           {% else %}
           <img src='{% static "MotoDinamicApp/images/motos/moto.png" %}' alt="moto" />
           {% endif %}
