@@ -406,8 +406,8 @@ def insertarFactura(request, cliente_id, eltotal):
         idservicios = carrito.getServicios()
         idproductos = carrito.getProductos()
         cantidad = carrito.getCantidad()
+        cont = 0
         for idp in idproductos:
-            cont = 0
             producto = Producto.objects.get(id = idp)
             producto.stock -= cantidad[cont]
             producto.save()
@@ -416,6 +416,8 @@ def insertarFactura(request, cliente_id, eltotal):
         for ids in idservicios:
             servicio = Servicio.objects.get(id = ids)
             Factura_Servicio.objects.create(idservicio = servicio, idFactura = miFactura)
+        carrito = Carrito(request)
+        carrito.limpiar()
         return redirect('facturas')
 
 def ordenes(request):
@@ -459,6 +461,8 @@ def insertarOrden(request, miplaca, cliente_id, eltotal):
         for ids in idservicios:
             servicio = Servicio.objects.get(id = ids)
             Factura_Servicio.objects.create(idServicio = servicio, idFactura = miFactura)
+        carrito = Carrito(request)
+        carrito.limpiar()
         return redirect('ordenes')
 
 def buscarMoto(request, cliente_id, eltotal):
