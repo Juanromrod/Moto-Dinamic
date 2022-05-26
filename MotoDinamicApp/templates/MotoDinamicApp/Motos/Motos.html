@@ -51,8 +51,6 @@
           <p class="type">  {{miMoto.modelo}} </p>
         </div>
       </div>
-      {% block editelim %}
-      {% endblock %}
     </div>
     {%endfor%}
   </div>
@@ -82,8 +80,8 @@
           <p class="type">  {{moto.modelo}} </p>
         </div>
       </div>
-      {% block editelim2 %}
-      {% endblock %}
+      {% elif n %}
+        <h3>No se encontró una moto con esa placa</h3>
       {%endif%}
     </form>
   </div>

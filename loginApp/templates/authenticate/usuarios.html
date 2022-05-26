@@ -78,6 +78,8 @@
            <p class="type"> {{usuario.email}} </p>
           </div>
         </div>
+      {% elif n %}
+       <h3>No se encontró un usuario con ese nombre</h3>
       {%endif%}
     </form>
   </div>

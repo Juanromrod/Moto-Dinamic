@@ -58,7 +58,11 @@ def usuarios(request):
         return render(request, 'authenticate/usuarios.html', {'usuarios': usuarios})
     if request.method == 'POST':
         myUser = request.POST['usuario']
-        miUsuario = User.objects.get(username = myUser)
-        return render(request, 'authenticate/usuarios.html', {'usuario': miUsuario , 'usuarios': usuarios})
+        try:
+            miUsuario = User.objects.get(username = myUser)
+            return render(request, 'authenticate/usuarios.html', {'usuario': miUsuario , 'usuarios': usuarios})
+        except:
+            n = True
+            return render(request, 'authenticate/usuarios.html', {'usuarios': usuarios, 'n': n})
 
     

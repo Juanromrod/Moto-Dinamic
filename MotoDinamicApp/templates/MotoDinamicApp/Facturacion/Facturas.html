@@ -63,7 +63,7 @@
     </a>
   </nav>
   <div class="body">
-    <div class="latnav" style="max-height: 740px;">
+    <div class="latnav">
       <h3>Facturación</h3>
       <div class="navbarlat">
         <a class="nav-links-lat" href="{% url 'facturacion_p' %}">
@@ -108,7 +108,7 @@
       <div class="searchDiv">
         <form action="{% url 'facturas' %}" method="POST">
           {% csrf_token %}
-          <span style="display: block;">Código de factura o documento</span>
+          <span style="display: block;">Código de factura</span>
           <div class="searchinput">
             <input type="text" name='facturaId' id="search">
             <div class="lupa">
@@ -129,8 +129,29 @@
           </a>
           {%endif%}
           {%endfor%}
+          {% elif n %}
+            <h3>No se encontró ninguna factura con ese código</h3>
           {%endif%}
         </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-content">
+      <div class="footer-section photo">
+        <img src='{% static "MotoDinamicApp/images/logo-02.png" %}' class="logo-footer" />
+      </div>
+      <div class="footer-bottom">
+        &copy; MOTODINAMIC 2022
+      </div>
+      <div class="footer-section contactar">
+        <div class="text">
+          50 #17-50 Sur, Bogotá D.C
+          </br>
+          +57 3205398442
+          </br>
+          motodinamic@mail.com
+        </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,6 @@
 from genericpath import exists
+from tkinter import N
+from xmlrpc.client import TRANSPORT_ERROR
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .cart import Carrito
@@ -49,8 +51,12 @@ def Productos(request):
         return render(request, 'MotoDinamicApp/Productos/Productos.html', {'products': productos})
     if request.method == 'POST':
         myId = request.POST['productId']
-        miProducto = Producto.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Productos/Productos.html', {'product': miProducto , 'products': productos})
+        try:
+            miProducto = Producto.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Productos/Productos.html', {'product': miProducto , 'products': productos})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Productos/Productos.html', {'products': productos, 'n': n})
 
 @login_required(login_url='/')
 def insertarProducto(request):
@@ -75,8 +81,12 @@ def modelimProducto(request):
         return render(request, 'MotoDinamicApp/Productos/editarProducto.html', {'products': products})
     if request.method == 'POST':
         myId = request.POST['productId']
-        miProducto = Producto.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Productos/editarProducto.html', {'product': miProducto , 'products': products})
+        try:
+            miProducto = Producto.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Productos/editarProducto.html', {'product': miProducto , 'products': products})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Productos/editarProducto.html', {'products': products, 'n': n})
 
 @login_required(login_url='/')
 def editarProducto(request, pk):
@@ -108,8 +118,12 @@ def Servicios(request):
         return render(request, 'MotoDinamicApp/Servicios/Servicios.html', {'servicios': servicios})
     if request.method == 'POST':
         myId = request.POST['servicioId']
-        miServicio = Servicio.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Servicios/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
+        try:
+            miServicio = Servicio.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Servicios/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Servicios/Servicios.html', {'servicios': servicios, 'n': n})
 
 @login_required(login_url='/')
 def insertarServicio(request):
@@ -134,8 +148,12 @@ def modelimServicio(request):
         return render(request, 'MotoDinamicApp/Servicios/editarServicio.html', {'servicios': servicios})
     if request.method == 'POST':
         myId = request.POST['servicioId']
-        miServicio = Servicio.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Servicios/editarServicio.html', {'servicio': miServicio , 'servicios': servicios})
+        try:
+            miServicio = Servicio.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Servicios/editarServicio.html', {'servicio': miServicio , 'servicios': servicios})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Servicios/editarServicio.html', {'servicios': servicios, 'n': n})
 
 @login_required(login_url='/')
 def editarServicio(request, pk):
@@ -167,24 +185,30 @@ def Clientes(request):
         return render(request, 'MotoDinamicApp/Clientes/Clientes.html', {'clientes': clientes})
     if request.method == 'POST':
         miId = request.POST['clienteId']
-        miCliente = Cliente.objects.get(identificacion = miId)
-        return render(request, 'MotoDinamicApp/Clientes/Clientes.html', {'cliente': miCliente , 'clientes': clientes})
-
+        try:
+            miCliente = Cliente.objects.get(identificacion = miId)
+            return render(request, 'MotoDinamicApp/Clientes/Clientes.html', {'cliente': miCliente , 'clientes': clientes})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Clientes/Clientes.html', {'clientes': clientes, 'n': n})
 @login_required(login_url='/')
 def insertarCliente(request):
+    form = inputCliente()
     ciudades = ['Bogotá', 'Medellin', 'Cali', 'Barranquilla', 'Cartagena', 'Ibagué', 'Santa Marta', 'Manizales', 'Pereira', 'Neiva','Pasto', 'Armenia']
     if(len(Ciudad.objects.all()) == 0):
         for c in ciudades:
             ciudad = Ciudad.objects.create(nombre = c)
             ciudad.save()
     if request.method == 'GET':
-        form = inputCliente()
         return render(request, 'MotoDinamicApp/Clientes/AgregarClientes.html',{'form': form})
     elif request.method == 'POST':
         miCliente = inputCliente(request.POST)
         if miCliente.is_valid():
             miCliente.save()
-        return redirect('insertar_cliente')
+            return redirect('insertar_cliente')
+        else:
+            n = True
+            return render(request, 'MotoDinamicApp/Clientes/AgregarClientes.html',{'form': form, 'n':n})
 
 @login_required(login_url='/')
 def modelimCliente(request):
@@ -193,8 +217,12 @@ def modelimCliente(request):
         return render(request, 'MotoDinamicApp/Clientes/editarCliente.html', {'clientes': clientes})
     if request.method == 'POST':
         miId = request.POST['clienteId']
-        miCliente = Cliente.objects.get(identificacion = miId)
-        return render(request, 'MotoDinamicApp/Clientes/editarCliente.html', {'cliente': miCliente , 'clientes': clientes})
+        try:
+            miCliente = Cliente.objects.get(identificacion = miId)
+            return render(request, 'MotoDinamicApp/Clientes/editarCliente.html', {'cliente': miCliente , 'clientes': clientes})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Clientes/editarCliente.html', {'clientes': clientes, 'n': n})
 
 @login_required(login_url='/')
 def editarCliente(request, pk):
@@ -226,19 +254,26 @@ def Motos(request):
         return render(request, 'MotoDinamicApp/Motos/Motos.html', {'motos': motos})
     if request.method == 'POST':
         miId = request.POST['motoId']
-        miMoto = Moto.objects.get(placa = miId)
-        return render(request, 'MotoDinamicApp/Motos/Motos.html', {'moto': miMoto , 'motos': motos})
+        try:
+            miMoto = Moto.objects.get(placa = miId)
+            return render(request, 'MotoDinamicApp/Motos/Motos.html', {'moto': miMoto , 'motos': motos})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Motos/Motos.html', {'motos': motos, 'n':n})
 
 @login_required(login_url='/')
 def insertarMoto(request):
+    form = inputMoto()
     if request.method == 'GET':
-        form = inputMoto()
         return render(request, 'MotoDinamicApp/Motos/AgregarMotos.html',{'form': form})
     elif request.method == 'POST':
         miMoto = inputMoto(request.POST, request.FILES)
         if miMoto.is_valid():
             miMoto.save()
-        return redirect('insertar_moto')
+            return redirect('insertar_moto')
+        else:
+            n = True
+            return render(request, 'MotoDinamicApp/Motos/AgregarMotos.html',{'form': form, 'n': n})
 
 @login_required(login_url='/')
 def modelimMoto(request):
@@ -247,8 +282,12 @@ def modelimMoto(request):
         return render(request, 'MotoDinamicApp/Motos/editarMoto.html', {'motos': motos})
     if request.method == 'POST':
         miId = request.POST['motoId']
-        miMoto = Moto.objects.get(placa = miId)
-        return render(request, 'MotoDinamicApp/Motos/editarMoto.html', {'moto': miMoto , 'motos': motos})
+        try:
+            miMoto = Moto.objects.get(placa = miId)
+            return render(request, 'MotoDinamicApp/Motos/editarMoto.html', {'moto': miMoto , 'motos': motos})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Motos/editarMoto.html', {'motos': motos, 'n': n})
 
 @login_required(login_url='/')
 def editarMoto(request, pk):
@@ -278,8 +317,12 @@ def facturacionP(request):
         return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'products': productos})
     if request.method == 'POST':
         myId = request.POST['productId']
-        miProducto = Producto.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'product': miProducto , 'products': productos})
+        try:
+            miProducto = Producto.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'product': miProducto , 'products': productos})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Facturacion/Productos.html', {'products': productos, 'n':n})
 
 @login_required(login_url='/')
 def facturacionS(request):
@@ -288,8 +331,12 @@ def facturacionS(request):
         return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicios': servicios})
     if request.method == 'POST':
         myId = request.POST['servicioId']
-        miServicio = Servicio.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
+        try:
+            miServicio = Servicio.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicio': miServicio , 'servicios': servicios})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Facturacion/Servicios.html', {'servicios': servicios, 'n':n})
 
 @login_required(login_url='/')
 def agregar_producto(request, producto_id):
@@ -352,8 +399,12 @@ def CarritoCompras(request):
         return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'clienteform': clienteform})
     if request.method == 'POST':
         miId = request.POST['clienteId']
-        miCliente = Cliente.objects.get(identificacion = miId)
-        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente , 'clientes': clientes, 'clienteform': clienteform})
+        try:
+            miCliente = Cliente.objects.get(identificacion = miId)
+            return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente , 'clientes': clientes, 'clienteform': clienteform})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'clienteform': clienteform, 'n':n})
 
 @login_required(login_url='/')
 def buscarCliente(request):
@@ -362,8 +413,12 @@ def buscarCliente(request):
         return render(request, 'MotoDinamicApp/Facturacion/Carrito.html',{'clienteform': clienteform})
     if request.method == 'POST':
         miId = request.POST['clienteId']
-        miCliente = Cliente.objects.get(identificacion = miId)
-        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente,'clienteform': clienteform})
+        try:
+            miCliente = Cliente.objects.get(identificacion = miId)
+            return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente,'clienteform': clienteform})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Facturacion/Carrito.html',{'clienteform': clienteform, 'n':n})
 
 @login_required(login_url='/')
 def crearCliente(request):
@@ -376,7 +431,11 @@ def crearCliente(request):
         if(cliente.is_valid()):
             cliente.save()
             miCliente = Cliente.objects.get(identificacion = miId)
-        return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente, 'clienteform': clienteform})
+            return render(request, 'MotoDinamicApp/Facturacion/Carrito.html', {'cliente': miCliente, 'clienteform': clienteform})
+        else:
+            nt = True
+            return render(request, 'MotoDinamicApp/Facturacion/Carrito.html',{'clienteform': clienteform, 'nt':nt})
+
 
 @login_required(login_url='/')
 def facturas(request):
@@ -386,8 +445,13 @@ def facturas(request):
         return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'facturas': facturas, 'c_f': c_f})
     if request.method == 'POST':
         myId = request.POST['facturaId']
-        miFactura = Factura.objects.get(id = myId)
-        return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'miFactura': miFactura, 'facturas': facturas, 'c_f': c_f})
+        try:
+            miFactura = Factura.objects.get(id = myId)
+            return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'miFactura': miFactura, 'facturas': facturas, 'c_f': c_f})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Facturacion/Facturas.html', {'facturas': facturas, 'c_f': c_f, 'n': n})
+
 
 @login_required(login_url='/')
 def verFactura(request, miFactura):
@@ -480,8 +544,12 @@ def buscarMoto(request, cliente_id, eltotal):
         return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'clienteid': cliente_id, 'total': eltotal})
     elif request.method == 'POST':
         miId = request.POST['motoId']
-        miMoto = Moto.objects.get(placa = miId)
-        return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
+        try:
+            miMoto = Moto.objects.get(placa = miId)
+            return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'clienteid': cliente_id, 'total': eltotal, 'n':n})
 
 @login_required(login_url='/')
 def crearMoto(request, cliente_id, eltotal):
@@ -495,4 +563,7 @@ def crearMoto(request, cliente_id, eltotal):
         if(moto.is_valid()):
             moto.save()
             miMoto = Moto.objects.get(placa = miplaca)
-        return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
+            return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'moto': miMoto, 'clienteid': cliente_id, 'total': eltotal})
+        else:
+            nt=True
+            return render(request, 'MotoDinamicApp/Ordenes/AgregarOrdenes.html',{'orderform': orderform, 'motoform': motoform, 'clienteid': cliente_id, 'total': eltotal, 'nt':nt})

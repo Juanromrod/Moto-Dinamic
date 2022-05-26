@@ -45,18 +45,19 @@
     </div>
     {%endfor%}
   </div>
-  <div class="searchDiv">
+  <div class="searchDiv" style="max-height: none;">
     <form action="{% url 'ordenes' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Número de placa</span>
       <div class="searchinput">
-        <input type="text" name='ordenId' id="search">
+        <input type="text" name='ordenId' id="search" style="margin-bottom: 20px;">
         <div class="lupa">
           <button class="btn" type="submit">Buscar</button>
         </div>
       </div>
+      <div class="scroll" style="max-height: 350px;">
       {%for orden in misOrdenes%}
-      <div style="margin-top: 30px;" class="card">
+      <div class="card">
         <div class="imageCard">
           {% if orden.idMoto.imagen %}
           <img src="{{orden.idMoto.imagen.url}}" alt="moto" />
@@ -75,6 +76,7 @@
         </div>
       </div>
       {%endfor%}
+    </div>
     </form>
   </div>
 </div>

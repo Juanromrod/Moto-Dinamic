@@ -58,6 +58,8 @@
           </div>
         </div>
         <p class="editelim"><a class="editar" href="{% url 'editar_servicio' servicio.id %}" >Editar</a><a class="eliminar" href="{% url 'eliminar_servicio' servicio.id %}">Eliminar</a></p>
+      {% elif n%}
+        <h3>No se encontró un servicio con ese código</h3>
       {%endif%}
     </form>
   </div>

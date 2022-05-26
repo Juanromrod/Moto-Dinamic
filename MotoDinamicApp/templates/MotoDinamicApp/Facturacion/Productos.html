@@ -91,6 +91,8 @@
         </div>
         <a href="{% url 'añadir_producto' product.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
       </div>
+      {% elif n %}
+        <h3>No se encontró un producto con ese código</h3>
       {%endif%}
     </form>
   </div>

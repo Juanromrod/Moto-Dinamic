@@ -35,7 +35,7 @@ class Servicio(models.Model):
     idTipoServicio = models.ForeignKey(TipoServicio, on_delete=PROTECT)
 
 class Cliente(models.Model):
-    identificacion = models.CharField(max_length=30)
+    identificacion = models.CharField(max_length=30, unique=True)
     nombre = models.CharField(max_length=30)
     celular = models.CharField(max_length=15)
     correo = models.EmailField(max_length=128)

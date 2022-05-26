@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-z&^jzp3lv93=vzgnpqs^yc6azy7c)^-$uo&s8ci7^1n#%#0qy%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['moto-dinamic.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'MotoDinamic.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd1lk6k01s3rjtp',
-        'HOST': 'ec2-54-164-40-66.compute-1.amazonaws.com',
-        'USER': 'bmdvvzsqjgmgsa',
-        'PASSWORD': '0b6585de4391f500aa175f5bc3a483bd0043b57bb9648e1fb376a41d98ce4081',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

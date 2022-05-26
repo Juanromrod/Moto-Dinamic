@@ -27,6 +27,9 @@
 {% block content%}
 <div class="content">
   <h1>Motos </h1>
+  {% if n %}
+    <script>alert('Ya existe una moto con esa placa')</script>
+  {% endif %}
   <div class="lista-inputs">
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}

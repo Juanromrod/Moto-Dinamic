@@ -72,6 +72,8 @@
           <p class="type">  {{cliente.correo}} </p>
         </div>
       </div>
+      {% elif n %}
+        <h3>No se encontró un cliente con ese documento</h3>
       {%endif%}
     </form>
   </div>

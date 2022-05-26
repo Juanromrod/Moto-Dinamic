@@ -84,6 +84,8 @@
           </div>
           <a href="{% url 'añadir_servicio' servicio.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
         </div>
+      {% elif n %}
+        <h3>No se encontró un servicio con ese código</h3>
       {%endif%}
     </form>
   </div>

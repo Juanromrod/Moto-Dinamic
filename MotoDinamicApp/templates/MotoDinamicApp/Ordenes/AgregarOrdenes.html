@@ -63,6 +63,9 @@
     </a>
   </nav>
   <div class="body" style="justify-content: space-evenly;">
+    {% if nt %}
+    <script>alert('Ya existe una moto con esa placa')</script>
+    {% endif %}
     <div class="cardcontent">
       <h1 style="margin-top: 0px;">Buscar moto</h1>
       <div class="searchDiv" style="margin-top: 0px; width: 450px;">
@@ -91,6 +94,8 @@
               </div>
             </div>
           </div>
+          {% elif n %}
+            <h3>No se encontró una moto con esa placa</h3>
           {%endif%}
         </form>
       </div>

@@ -86,6 +86,8 @@
       </div>
       <p class="editelim"><a class="editar" href="{% url 'editar_moto' miMoto.id %}">Editar</a><a class="eliminar"
           href="{% url 'eliminar_moto' miMoto.id %}">Eliminar</a></p>
+      {% elif n %}
+        <h3>No se encontró una moto con esa placa</h3>
       {%endif%}
     </form>
   </div>
