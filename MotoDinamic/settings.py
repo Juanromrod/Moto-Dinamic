@@ -133,8 +133,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/MotoDinamic/productos'
 LOGIN_URL='/login'
 
-STATIC_URL='/static/'
-
-# Configure Django App for Heroku.
-import django_heroku
-django_heroku.settings(locals())
