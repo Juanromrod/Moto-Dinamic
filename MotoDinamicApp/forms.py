@@ -1,6 +1,4 @@
-from logging import PlaceHolder
 from datetime import datetime
-from tkinter import Widget
 from unicodedata import numeric
 from django import forms
 from django.db import models
