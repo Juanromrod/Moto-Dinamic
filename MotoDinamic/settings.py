@@ -50,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
   
 ROOT_URLCONF = 'MotoDinamic.urls'
@@ -135,13 +134,4 @@ LOGIN_REDIRECT_URL = '/MotoDinamic/productos'
 LOGIN_URL='/login'
 
 STATIC_URL='/static/'
-STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
-STATIC_TMP=os.path.join(BASE_DIR,'static')
 
-os.makedirs(STATIC_TMP, exist_ok=True)
-os.makedirs(STATIC_ROOT, exist_ok=True)
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'static'),
-)
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
