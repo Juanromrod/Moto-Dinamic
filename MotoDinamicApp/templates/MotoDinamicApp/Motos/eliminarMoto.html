@@ -37,7 +37,11 @@
 <div class="content">
   <h1>Motos</h1>
   <div class="container">
-    <p>¿Seguro que desea eliminar esta moto?</p>
+    {% if n %}
+      <p>No se puede eliminar esta moto ya que hay una orden de ingreso que la contiene</p>
+    {% else %}
+      <p>¿Seguro que desea eliminar esta moto?</p>
+    {% endif %}
     <div class="card">
       <div class="imageCard">
         {% if moto.imagen %}
@@ -58,12 +62,18 @@
       <div class="botones">
         <div class="boton">
           <a href="{% url 'modelim_moto' %}">
+            {% if not n %}
             <div class="button" style="border: none;"> CANCELAR </div>
+            {% else %}
+            <div class="button" style="border: none;"> VOLVER </div>
+            {% endif %}
           </a>
         </div>
+        {% if not n %}
         <div class="boton">
           <button name="guardar" type="submit" class="button" style="background-color: RED;"> ELIMINAR </button>
         </div>
+        {% endif %}
       </div>
     </form>
   </div>

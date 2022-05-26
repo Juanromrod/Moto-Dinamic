@@ -101,11 +101,16 @@ def editarProducto(request, pk):
 @login_required(login_url='/')
 def eliminarProducto(request, pk):
     producto = Producto.objects.get(id = pk)
+    n = False
     if request.method == 'GET':
         return render(request, 'MotoDinamicApp/Productos/eliminarProducto.html', {'product': producto})
     if request.method == 'POST':
-        producto.delete()
-        return redirect('modelim_producto')
+        try:
+            producto.delete()
+            return redirect('modelim_producto')
+        except:
+            n=True
+            return render(request, 'MotoDinamicApp/Productos/eliminarProducto.html', {'product': producto, 'n':n})
 
 @login_required(login_url='/')
 def Servicios(request):
@@ -171,8 +176,12 @@ def eliminarServicio(request, pk):
     if request.method == 'GET':
         return render(request, 'MotoDinamicApp/Servicios/eliminarServicio.html', {'servicio': servicio})
     if request.method == 'POST':
-        servicio.delete()
-        return redirect('modelim_servicio')
+        try:
+            servicio.delete()
+            return redirect('modelim_servicio')
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Servicios/eliminarServicio.html', {'servicio': servicio, 'n': n})
 
 @login_required(login_url='/')
 def Clientes(request):
@@ -240,8 +249,12 @@ def eliminarCliente(request, pk):
     if request.method == 'GET':
         return render(request, 'MotoDinamicApp/Clientes/eliminarCliente.html', {'cliente': cliente})
     if request.method == 'POST':
-        cliente.delete()
-        return redirect('modelim_cliente')
+        try:
+            cliente.delete()
+            return redirect('modelim_cliente')
+        except:
+            n = True
+            return render(request, 'MotoDinamicApp/Clientes/eliminarCliente.html', {'cliente': cliente, 'n': n})
 
 @login_required(login_url='/')
 def Motos(request):
@@ -305,8 +318,12 @@ def eliminarMoto(request, pk):
     if request.method == 'GET':
         return render(request, 'MotoDinamicApp/Motos/eliminarMoto.html', {'moto': moto})
     if request.method == 'POST':
-        moto.delete()
-        return redirect('modelim_moto')
+        try:
+            moto.delete()
+            return redirect('modelim_moto')
+        except:
+            n=True
+            return render(request, 'MotoDinamicApp/Motos/eliminarMoto.html', {'moto': moto, 'n': n})
 
 @login_required(login_url='/')
 def facturacionP(request):
