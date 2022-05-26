@@ -1,5 +1,3 @@
-from genericpath import exists
-from tkinter import N
 from xmlrpc.client import TRANSPORT_ERROR
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
