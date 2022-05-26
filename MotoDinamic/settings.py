@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z&^jzp3lv93=vzgnpqs^yc6azy7c)^-$uo&s8ci7^1n#%#0qy%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -146,7 +146,3 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# Configure Django App for Heroku.
-import django_heroku
-django_heroku.settings(locals())
