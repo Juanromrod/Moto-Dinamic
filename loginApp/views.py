@@ -1,15 +1,25 @@
-from tkinter import Widget
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from .forms import RegistroUsuarioForm
-import loginApp
 from django.contrib.auth.models import User
 from .forms import RegistroUsuarioForm
 
 
 def login_user(request):
+    try:
+        User.objects.get(username = 'admin')
+    except:
+        user = User(
+            username = 'admin',
+            email = 'motodinamic@gmail.com',
+            first_name = 'Ricardo',
+            last_name = 'Arcila',
+        )
+        user.set_password('mOTODINAMIC2022@')
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -42,21 +52,17 @@ def register_user(request):
 
     return render(request,'authenticate/registrar_usuario.html',{'form':form,})
 
-def modelimUsuario(request):
+def usuarios(request):
     usuarios = User.objects.all()
     if request.method == "GET":
-        return render(request, 'authenticate/editarUsuario.html', {'usuarios': usuarios})
+        return render(request, 'authenticate/usuarios.html', {'usuarios': usuarios})
     if request.method == 'POST':
         myUser = request.POST['usuario']
-        miUsuario = User.objects.get(username = myUser)
-        return render(request, 'authenticate/editarUsuario.html', {'usuario': miUsuario , 'usuarios': usuarios})
-
-def eliminarUsuario(request, pk):
-    usuario = User.objects.get(username = pk)
-    if request.method == 'GET':
-        return render(request, 'authenticate/eliminarUsuario.html', {'usuario': usuario})
-    if request.method == 'POST':
-        usuario.delete()
-        return redirect('buscar_usuario')
+        try:
+            miUsuario = User.objects.get(username = myUser)
+            return render(request, 'authenticate/usuarios.html', {'usuario': miUsuario , 'usuarios': usuarios})
+        except:
+            n = True
+            return render(request, 'authenticate/usuarios.html', {'usuarios': usuarios, 'n': n})
 
     

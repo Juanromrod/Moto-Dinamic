@@ -21,13 +21,13 @@
   </a>
   <a class="nav-links-lat" href="{% url 'buscar_usuario' %}">             
     <li class="nav">
-      <i class="nav-icon fas fa-solid fa-pen"></i>
-      Eliminar usuarios
+      <i class="nav-icon fas fa-solid fa-book"></i>
+      Usuarios
     </li>
   </a>
   <a class="nav-links-lat" href="/admin">             
     <li class="nav">
-      <i class="nav-icon fas fa-solid fa-pen"></i>
+      <i class="nav-icon fas fa-solid fa-key"></i>
       Modo administrador
     </li>
   </a>
@@ -44,23 +44,22 @@
     <div>
       <div class="card">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+        <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="usuario" />
       </div>
-      <div class="infoCard">
+      <div class="infoCard" style="width: 70%;">
         <h2> {{myUser.username}} <span>#{{myUser.id}}</span></h2>
         <p class="info"> Nombre: {{myUser.first_name}}</p>
         <p class="info"> Apellido: {{myUser.last_name}} </p>
         <p class="type"> {{myUser.email}} </p>
       </div>
       </div>
-      <!-- <p></p> -->
     </div>
     {%endfor%}
   </div>
   <div class="searchDiv">
     <form action="{% url 'buscar_usuario' %}" method="POST">
       {% csrf_token %}
-      <span style="display: block;">Usuario</span>
+      <span style="display: block;">Nombre del usuario:</span>
       <div class="searchinput">
         <input type="text" name='usuario' id="search">
         <div class="lupa">
@@ -68,18 +67,19 @@
         </div>
       </div>
       {%if usuario%}
-        <div style="margin-top: 30px;" class="productCard">
+        <div style="margin-top: 30px;" class="card">
           <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+          <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
           </div>
-          <div class="infoCard">
+          <div class="infoCard" style="width: 70%;">
            <h2> {{usuario.username}}</h2>
            <p class="info"> Nombre: {{usuario.first_name}} </p>
            <p class="info"> Apellido: {{usuario.last_name}} </p>
            <p class="type"> {{usuario.email}} </p>
           </div>
         </div>
-        <p class="editelim"><a class="eliminar" href="{% url 'eliminar_usuario' usuario.username %}">Eliminar</a></p>
+      {% elif n %}
+       <h3>No se encontró un usuario con ese nombre</h3>
       {%endif%}
     </form>
   </div>

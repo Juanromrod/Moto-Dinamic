@@ -27,6 +27,9 @@
 {% block content%}
 <div class="content">
   <h1>Clientes </h1>
+  {% if n %}
+  <script>alert('Ya existe un cliente con ese documento.')</script>
+  {% endif %}
   <div class="lista-inputs">
   <form action="" method="POST">
     {% csrf_token %}

@@ -63,6 +63,9 @@
     </a>
   </nav>
   <div class="body" style="justify-content: space-evenly;">
+    {% if nt %}
+    <script>alert('Ya existe un cliente con ese documento.')</script>
+    {% endif %}
     <div class="cardcontent">
       <h1 style="margin-top: 0px;">Buscar cliente</h1>
       <div class="searchDiv" style="margin-top: 0px; width: 450px;">
@@ -79,7 +82,7 @@
           <div class="align">
             <div style="margin-top: 30px;" class="card">
               <div class="imageCard">
-                <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="producto" />
+                <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="usuario" />
               </div>
               <div class="infoCard">
                 <h2> {{cliente.nombre}}</h2>
@@ -89,6 +92,8 @@
               </div>
             </div>
           </div>
+          {% elif n %}
+            <h3>No se encontró un cliente con ese número de documento</h3>
           {%endif%}
         </form>
       </div>
@@ -116,7 +121,7 @@
               {% if value.imagen %}
               <img src="{{value.imagen}}" alt="producto" />
               {% else %}
-              <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+              <img src='{% static "MotoDinamicApp/images/productos/productos.png" %}' alt="producto" />
               {% endif %}
             </div>
             <div class="infoCard">

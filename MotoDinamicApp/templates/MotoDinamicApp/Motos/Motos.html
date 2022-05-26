@@ -5,16 +5,22 @@
 {% block latnav %}
 <h3>Motos</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="{% url 'motos' %}">
+  <a class="nav-links-lat" href="{% url 'insertar_moto' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-plus"></i>
+      Agregar motos
+    </li>
+  </a>
+  <a class="nav-links-lat" href="{% url 'motos' %}">
+    <li class="nav">
+      <i class="nav-icon fas fa-solid fa-book"></i>
       Motos
     </li>
   </a>
   <a class="nav-links-lat" href="{% url 'modelim_moto' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Editar Motos
+      Editar o eliminar Motos
     </li>
   </a>
 </div>
@@ -45,8 +51,6 @@
           <p class="type">  {{miMoto.modelo}} </p>
         </div>
       </div>
-      {% block editelim %}
-      {% endblock %}
     </div>
     {%endfor%}
   </div>
@@ -76,8 +80,8 @@
           <p class="type">  {{moto.modelo}} </p>
         </div>
       </div>
-      {% block editelim2 %}
-      {% endblock %}
+      {% elif n %}
+        <h3>No se encontró una moto con esa placa</h3>
       {%endif%}
     </form>
   </div>

@@ -55,6 +55,8 @@
            <p class="type"> {{servicio.idTipoServicio.nombre}} </p>
           </div>
         </div>
+      {% elif n %}
+        <h3>No se encontró un servicio con ese código</h3>
       {%endif%}
     </form>
   </div>

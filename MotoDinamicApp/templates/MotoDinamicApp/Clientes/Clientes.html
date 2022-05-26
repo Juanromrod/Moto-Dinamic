@@ -5,16 +5,22 @@
 {% block latnav %}
 <h3>Clientes</h3>
 <div class="navbarlat">
-  <a class="nav-links-lat" href="{% url 'clientes' %}">
+  <a class="nav-links-lat" href="{% url 'insertar_cliente' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-plus"></i>
+      Agregar clientes
+    </li>
+  </a>
+  <a class="nav-links-lat" href="{% url 'clientes' %}">
+    <li class="nav">
+      <i class="nav-icon fas fa-solid fa-book"></i>
       Clientes
     </li>
   </a>
   <a class="nav-links-lat" href="{% url 'modelim_cliente' %}">
     <li class="nav">
       <i class="nav-icon fas fa-solid fa-pen"></i>
-      Editar clientes
+      Editar o eliminar clientes
     </li>
   </a>
 </div>
@@ -66,6 +72,8 @@
           <p class="type">  {{cliente.correo}} </p>
         </div>
       </div>
+      {% elif n %}
+        <h3>No se encontró un cliente con ese documento</h3>
       {%endif%}
     </form>
   </div>

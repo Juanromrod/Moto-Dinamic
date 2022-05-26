@@ -25,7 +25,7 @@
   </a>
   <a class="nav-links-lat" href="{% url 'facturas' %}">
     <li class="nav">
-      <i class="nav-icon fas fa-solid fa-pen"></i>
+      <i class="nav-icon fas fa-solid fa-book"></i>
       Consultar facturas
     </li>
   </a>
@@ -46,7 +46,7 @@
           {% if myProduct.imagen %}
           <img src="{{myProduct.imagen.url}}" alt="producto" />
           {% else %}
-          <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+          <img src='{% static "MotoDinamicApp/images/productos/productos.png" %}' alt="producto" />
           {% endif %}
         </div>
         <div class="infoCard">
@@ -80,7 +80,7 @@
           {% if product.imagen %}
           <img src="{{myProduct.imagen.url}}" alt="producto" />
           {% else %}
-          <img src='{% static "MotoDinamicApp/images/productos/productos.jpg" %}' alt="producto" />
+          <img src='{% static "MotoDinamicApp/images/productos/productos.png" %}' alt="producto" />
           {% endif %}
         </div>
         <div class="infoCard">
@@ -91,6 +91,8 @@
         </div>
         <a href="{% url 'añadir_producto' product.id %}"><i class="addk fas fa-solid fa-plus"></i></a>
       </div>
+      {% elif n %}
+        <h3>No se encontró un producto con ese código</h3>
       {%endif%}
     </form>
   </div>
