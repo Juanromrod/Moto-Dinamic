@@ -4,18 +4,22 @@
 {%load static%}
 
 {% block style%}
-<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Productos.css" %}'>
+<link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
 {%endblock%}
 
-{% block contenido%}
-<div class="productos">
-  <h1>Servicios <a style="margin-left: 15px;" href="/crearservicio"><i class="add fas fa-solid fa-plus"></i></a></h1>
-  <div class="lista">
+{% block content%}
+<div class="content">
+  <h1>Servicios <a style="margin-left: 15px;" href="{% url 'insertar_servicio' %}"><i class="add fas fa-solid fa-plus"></i></a></h1>
+  <div class="list">
     {%for miServicio in servicios%}
     <div>
-    <div class="productCard">
+    <div class="card">
       <div class="imageCard">
-        <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+        {% if miServicio.idTipoServicio.nombre == 'Limpieza'%}
+        <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+        {% else %}
+        <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+        {% endif %}
       </div>
       <div class="infoCard">
         <h2> {{miServicio.nombre}} <span>#{{miServicio.id}}</span></h2>
@@ -23,27 +27,27 @@
         <p class="type"> {{miServicio.idTipoServicio.nombre}} </p>
       </div>
     </div>
-    {% block editelim %}
-    {% endblock %}
     </div>
     {%endfor%}
   </div>
-  <div class="buscar">
+  <div class="searchDiv">
     <form action="{% url 'servicios' %}" method="POST">
       {% csrf_token %}
       <span style="display: block;">Código</span>
       <div class="searchinput">
         <input type="text" name='servicioId' id="search">
-        {% block busqueda %}
-        {% endblock %}
         <div class="lupa">
           <button class="btn" type="submit">Buscar</button>
         </div>
       </div>
       {%if servicio%}
-        <div style="margin-top: 30px;" class="productCard">
+        <div style="margin-top: 30px;" class="card">
           <div class="imageCard">
-          <img src='{% static "MotoDinamicApp/images/casco.jpg" %}' alt="producto" />
+            {% if miServicio.idTipoServicio.nombre == 'Limpieza'%}
+            <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+            {% else %}
+            <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+            {% endif %}
           </div>
           <div class="infoCard">
            <h2> {{servicio.nombre}} <span>#{{servicio.id}}</span></h2>
@@ -51,8 +55,8 @@
            <p class="type"> {{servicio.idTipoServicio.nombre}} </p>
           </div>
         </div>
-        {% block editelim2 %}
-        {% endblock %}
+      {% elif n %}
+        <h3>No se encontró un servicio con ese código</h3>
       {%endif%}
     </form>
   </div>

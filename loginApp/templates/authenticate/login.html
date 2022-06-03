@@ -20,13 +20,34 @@
             </div>
         </nav>
         <div class="LoginContenedor">
+          <div class="container">
+            {% if messages %}
+              {% for message in messages %}
+                
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+      
+              {% endfor %}
+            {% endif %}
+          </div>
           <h2>Bienvenido!</h2>
           <p>Por favor inicia sesión para continuar</p>
           <br>
           <p class="inicarsesion">INICIAR SESIÓN</p>
           <form action="" method="POST">
             {% csrf_token %}
-            {{form}}
+              <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <br>
+                <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <br>
+                <input type="password" class="form-control" name="password">
+              </div>
             <div class="boton">
               <button name="guardar" type="submit" class="button"> INICIAR SESIÓN </button>
             </div>

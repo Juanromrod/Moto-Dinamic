@@ -1,3 +1,4 @@
+{%load humanize%}
 {%load static%}
 <!DOCTYPE html>
 <html>
@@ -7,8 +8,9 @@
   <title>Moto Dinamic</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Navbar.css" %}'>
-  {%block style%}
-  {%endblock%}
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Agregar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
+  <script src='{% static "MotoDinamicApp/scripts/shoppingCart.js" %}'></script>
   <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
 </head>
 
@@ -55,57 +57,84 @@
         {% endif %}
       </li>
     </ul>
-    <a id="signout" href="{% url 'logout'%}" class="nav-links">
+      <a id="signout" href="{% url 'logout'%}" class="nav-links">
     <li class="icono fas fa-sign-out-alt"></li>
     SALIR
     </a>
   </nav>
   <div class="body">
     <div class="latnav">
-      {%block latnav%}
-      <h3>Productos & Servicios</h3>
+      <h3>Facturación</h3>
       <div class="navbarlat">
-        <a class="nav-links-lat" href="{% url 'insertar_producto' %}">
+        <a class="nav-links-lat" href="{% url 'facturacion_p' %}">
           <li class="nav">
             <i class="nav-icon fas fa-solid fa-plus"></i>
-            Agregar productos
-          </li>
-        </a>
-        <a class="nav-links-lat" href="{% url 'productos' %}">
-          <li class="nav">
-            <i class="nav-icon fas fa-solid fa-book"></i>
             Productos
           </li>
         </a>
-        <a class="nav-links-lat" href="{% url 'modelim_producto' %}">
-          <li class="nav">
-            <i class="nav-icon fas fa-solid fa-pen"></i>
-            Editar o eliminar productos
-          </li>
-        </a>
-        <a class="nav-links-lat" href="{% url 'insertar_servicio' %}">
+        <a class="nav-links-lat" href="{% url 'facturacion_s' %}">
           <li class="nav">
             <i class="nav-icon fas fa-solid fa-plus"></i>
-            Agregar servicios
-          </li>
-        </a>
-        <a class="nav-links-lat" href="{% url 'servicios' %}">
-          <li class="nav">
-            <i class="nav-icon fas fa-solid fa-book"></i>
             Servicios
           </li>
         </a>
-        <a class="nav-links-lat" href="{% url 'modelim_servicio' %}">
+        <a class="nav-links-lat" href="{% url 'facturas' %}">
           <li class="nav">
-            <i class="nav-icon fas fa-solid fa-pen"></i>
-            Editar o eliminar servicios
+            <i class="nav-icon fas fa-solid fa-book"></i>
+            Consultar facturas
           </li>
         </a>
       </div>
-      {%endblock%}
     </div>
-    {%block content%}
-    {%endblock%}
+    <div class="content">
+      <h1>Facturas</h1>
+      <div class="list">
+        {%for miFactura in facturas%}
+        {%for c in c_f%}
+        {% if c.idFactura.id == miFactura.id %}
+        <a style="text-decoration: none; color: black;" href="{% url 'ver_factura' miFactura.id%}">
+          <div class="card">
+            <div class="infoCard">
+              <h2> {{c.idCliente.nombre}} <span>#{{miFactura.id}}</span></h2>
+              <p class="info"> Fecha: {{miFactura.fecha}} </p>
+              <p class="type"> Total: ${{miFactura.total | intcomma}} </p>
+            </div>
+          </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="searchDiv">
+        <form action="{% url 'facturas' %}" method="POST">
+          {% csrf_token %}
+          <span style="display: block;">Código de factura</span>
+          <div class="searchinput">
+            <input type="text" name='facturaId' id="search">
+            <div class="lupa">
+              <button class="btn" type="submit">Buscar</button>
+            </div>
+          </div>
+          {%if miFactura%}
+          {%for c in c_f%}
+          {% if c.idFactura.id == miFactura.id %}
+          <a style="text-decoration: none; color: black;" href="{% url 'ver_factura' miFactura.id%}">
+            <div class="card">
+              <div class="infoCard">
+                <h2> {{c.idCliente.nombre}} <span>#{{miFactura.id}}</span></h2>
+                <p class="info"> Fecha: {{miFactura.fecha}} </p>
+                <p class="type"> Total: ${{miFactura.total | intcomma}} </p>
+              </div>
+            </div>
+          </a>
+          {%endif%}
+          {%endfor%}
+          {% elif n %}
+            <h3>No se encontró ninguna factura con ese código</h3>
+          {%endif%}
+        </form>
+      </div>
+    </div>
   </div>
   <div class="footer">
     <div class="footer-content">

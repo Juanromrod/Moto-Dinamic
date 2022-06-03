@@ -1,0 +1,181 @@
+{%load humanize%}
+{%load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Moto Dinamic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Navbar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/Agregar.css" %}'>
+  <link rel="stylesheet" href='{% static "MotoDinamicApp/styles/CRUD.css" %}'>
+  <script src='{% static "MotoDinamicApp/scripts/shoppingCart.js" %}'></script>
+  <script src="https://kit.fontawesome.com/f71bc73b9e.js"></script>
+</head>
+
+<body>
+  <nav class="NavbarItems">
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'productos' %}" class="nav-links">
+          Productos & Servicios
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'clientes' %}" class="nav-links">
+          Clientes
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'motos' %}" class="nav-links">
+          Motos
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'ordenes' %}" class="nav-links">
+          Órdenes de ingreso
+        </a>
+      </li>
+    </ul>
+    <div>
+      <a href="{% url 'productos' %}">
+        <img class="logo" src='{% static "MotoDinamicApp/images/logo-01.png" %}' />
+      </a>
+    </div>
+    <ul class="nav-menu">
+      <li>
+        <a href="{% url 'facturacion_p' %}" class="nav-links">
+          Facturación
+        </a>
+      </li>
+      <li>
+        {% if user.is_superuser %}
+        <a href="{% url 'registrar_usuario'%}" class="nav-links">
+          Usuarios
+        </a>
+        {% endif %}
+      </li>
+    </ul>
+      <a id="signout" href="{% url 'logout'%}" class="nav-links">
+    <li class="icono fas fa-sign-out-alt"></li>
+    SALIR
+    </a>
+  </nav>
+  <div class="body" style="justify-content: space-evenly;">
+    {% if nt %}
+    <script>alert('Ya existe un cliente con ese documento.')</script>
+    {% endif %}
+    <div class="cardcontent">
+      <h1 style="margin-top: 0px;">Buscar cliente</h1>
+      <div class="searchDiv" style="margin-top: 0px; width: 450px;">
+        <form action="{% url 'buscar_cliente' %}" method="POST">
+          {% csrf_token %}
+          <span>Número de cédula</span>
+          <div class="searchinput">
+            <input type="text" name='clienteId' id="search">
+            <div class="lupa">
+              <button class="btn" type="submit">Buscar</button>
+            </div>
+          </div>
+          {%if cliente%}
+          <div class="align">
+            <div style="margin-top: 30px;" class="card">
+              <div class="imageCard">
+                <img src='{% static "MotoDinamicApp/images/user.png" %}' alt="usuario" />
+              </div>
+              <div class="infoCard">
+                <h2> {{cliente.nombre}}</h2>
+                <p class="info"> Documento: {{cliente.identificacion}} </p>
+                <p class="info"> Celular: {{cliente.celular}} </p>
+                <p class="type"> {{cliente.correo}} </p>
+              </div>
+            </div>
+          </div>
+          {% elif n %}
+            <h3>No se encontró un cliente con ese número de documento</h3>
+          {%endif%}
+        </form>
+      </div>
+      <h1 style="margin-top: 35px;">Agregar cliente<i onClick="show()" style="cursor: pointer;"
+          class="add fas fa-solid fa-plus"></i></h1>
+      <div id="addC" class="lista-inputsC" style="visibility: hidden;">
+        <form action="{% url 'añadir_cliente' %}" method="POST">
+          {% csrf_token %}
+          {{clienteform}}
+          <div class="align">
+            <button class="btn" style="width: 300px; margin-left: 0px" name="guardar" type="submit" class="button"> GUARDAR </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="cartnav">
+      <h3>Facturación</h3>
+      <div class="scroll">
+        {% if request.session.carrito.items %}
+        {% for key, value in request.session.carrito.items %}
+        {% if value.producto_id %}
+        <div class="divisor">
+          <div class="cardcart">
+            <div class="imageCard">
+              {% if value.imagen %}
+              <img src="{{value.imagen}}" alt="producto" />
+              {% else %}
+              <img src='{% static "MotoDinamicApp/images/productos/productos.png" %}' alt="producto" />
+              {% endif %}
+            </div>
+            <div class="infoCard">
+              <h2> {{value.nombre}} <span>#{{value.producto_id}}</span></h2>
+              <p class="info"> Cantidad: {{value.cantidad}} <a style="text-decoration: none;"
+                  href="{% url 'aumentar_producto' value.producto_id %}" class="sum btn-dark badge-dark">+</a><a
+                  style="text-decoration: none;" href="{% url 'restar_producto' value.producto_id %}"
+                  class="sub btn-dark badge-dark">-</a></p>
+              <p class="type"> Precio: ${{value.acumulado | intcomma}} </p>
+            </div>
+          </div>
+          <a href="{% url 'elim_producto' value.producto_id %}" style="text-decoration: none;"><i
+              class="ticon fas fa-solid fa-trash"></i></a>
+        </div>
+        {% endif %}
+        {% if value.servicio_id %}
+        <div class="divisor">
+          <div class="cardcart">
+            <div class="imageCard">
+              {% if value.tipo == 'Limpieza'%}
+              <img src='{% static "MotoDinamicApp/images/servicios/servicio-l.png" %}' alt="servicio" />
+              {% else %}
+              <img src='{% static "MotoDinamicApp/images/servicios/servicio-r.png" %}' alt="servicio" />
+              {% endif %}
+            </div>
+            <div class="infoCard">
+              <h2> {{value.nombre}} <span>#{{value.servicio_id}}</span></h2>
+              <p class="type"> Precio: ${{value.acumulado | intcomma}} </p>
+            </div>
+          </div>
+          <a href="{% url 'elim_servicio' value.servicio_id %}" style="text-decoration: none;"><i
+              class="ticon fas fa-solid fa-trash"></i></a>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <h3 style="font-size: 2.5rem;">El carrito está vacio</h3>
+        <div class="align"><a href="{% url 'facturacion_p' %}"><button class="btn2" type="submit" class="button"> PRODUCTOS </button></a></div>
+        {% endif %}
+      </div>
+      {% if request.session.carrito.items %}
+      <h1 style="justify-content: center;">Total: ${{total_carrito | intcomma}}</h1>
+      {% if cliente %}
+      {% if service == True %}
+      <div class="align"><a href="{% url 'insertar_orden' cliente.id total_carrito%}"><button class="btn2" type="submit" class="button"> FACTURAR </button></a></div>
+      {% else %}
+      <div class="align"><a href="{% url 'completar_factura' cliente.id total_carrito %}"><button class="btn2" type="submit" class="button"> FACTURAR </button></a></div>
+      {% endif %}
+      {% else %}
+      <div class="align"><h3 style="padding: 0px;">Seleccione al cliente para continuar</h3></div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</body>
+
+</html>
